@@ -1,0 +1,8 @@
+# Personal workbooks and exported reports must never enter the public repository.
+*.xlsx
+*.xls
+
+# The original working folder contains personal documents and workbook backups.
+/Old/
+/Perguntas AI.txt
+/Respostas AI.txt
