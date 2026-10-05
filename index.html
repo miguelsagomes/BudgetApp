@@ -220,16 +220,16 @@ body.light .dw-icobtn{background:#f1f5f9;border-color:#cbd5e1;color:#475569}
     <button class="dw-topicon dw-menutoggle" id="btnMenuLocal" aria-haspopup="true" aria-expanded="false" title="Local">💻</button>
     <div class="dw-menupanel" role="menu">
       <div class="dw-menuhead" id="lblLocal">Local</div>
-      <button class="dw-menuitem" id="btnConnect" role="menuitem" title="Link an Excel file"><span>⬆</span><b id="lblConnect">Upload (open file)</b></button>
-      <button class="dw-menuitem" id="btnSave" role="menuitem" title="Save to Excel"><span>⬇</span><b id="lblSave">Download (save file)</b></button>
+      <button class="dw-menuitem" id="btnConnect" role="menuitem" title="Link an Excel file"><span>📂</span><b id="lblConnect">Open file</b></button>
+      <button class="dw-menuitem" id="btnSave" role="menuitem" title="Save to Excel"><span>💾</span><b id="lblSave">Save file</b></button>
     </div>
   </div>
   <div class="dw-menu" id="menuDrive">
     <button class="dw-topicon dw-menutoggle" id="btnMenuDrive" aria-haspopup="true" aria-expanded="false" title="Drive">☁</button>
     <div class="dw-menupanel" role="menu">
       <div class="dw-menuhead" id="lblDrive">Drive</div>
-      <button class="dw-menuitem" id="btnDriveSync" role="menuitem" title="Sync with Google Drive"><span>⬇</span><b id="lblDriveSync">Download (link/refresh)</b></button>
-      <button class="dw-menuitem" id="btnDriveSave" role="menuitem" title="Upload to Drive"><span>⬆</span><b id="lblDriveSave">Upload (save to Drive)</b></button>
+      <button class="dw-menuitem" id="btnDriveSync" role="menuitem" title="Sync with Google Drive"><span>⬇</span><b id="lblDriveSync">Get from Drive</b></button>
+      <button class="dw-menuitem" id="btnDriveSave" role="menuitem" title="Upload to Drive"><span>⬆</span><b id="lblDriveSave">Upload to Drive</b></button>
     </div>
   </div>
   <span class="dw-drive-status" id="driveSyncStatus" aria-live="polite"></span>
@@ -3382,10 +3382,10 @@ function applyStaticText(){
   const pt = ui.lang!=='en';
   $('lblLocal').textContent = pt ? 'Local (computador)' : 'Local (computer)';
   $('lblDrive').textContent = 'Google Drive';
-  $('lblConnect').textContent = pt ? 'Carregar (abrir ficheiro)' : 'Upload (open file)';
-  $('lblSave').textContent = pt ? 'Descarregar (guardar ficheiro)' : 'Download (save file)';
-  $('lblDriveSync').textContent = pt ? 'Descarregar (ligar/atualizar)' : 'Download (link/refresh)';
-  $('lblDriveSave').textContent = pt ? 'Enviar (guardar no Drive)' : 'Upload (save to Drive)';
+  $('lblConnect').textContent = pt ? 'Abrir ficheiro' : 'Open file';
+  $('lblSave').textContent = pt ? 'Guardar ficheiro' : 'Save file';
+  $('lblDriveSync').textContent = pt ? 'Obter do Drive' : 'Get from Drive';
+  $('lblDriveSave').textContent = pt ? 'Enviar para o Drive' : 'Upload to Drive';
   $('btnMenuLocal').title = pt ? 'Local' : 'Local';
   $('btnTheme').title = t('btn_theme_title');
   $('btnLang').title = t('btn_lang_title');
