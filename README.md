@@ -24,6 +24,8 @@ The Google OAuth client must authorize that HTTPS origin. The Google Picker API 
 
 To use the shared app, end users do not need their own GitHub account or repository. In **Settings → Google Drive**, enter the OAuth Client ID and Google Picker API key, save them, then choose **Link to Google Drive** and authorize the Google account that owns the workbook. The two values are saved in that browser on that device; configure them once on each additional device. Each Google account uses its own Drive file.
 
+The 💾 button saves/exports an Excel workbook on the computer; it does not save to Google Drive. The ☁ button authorizes the Google account and, if no Drive workbook is linked yet, opens the file picker so the user can choose the `.xlsx` workbook. Seeing an authorized Google account does not by itself mean a Drive file has been selected or synced.
+
 The **How to?** guide in the app explains the Google Cloud setup: enable Google Drive API and Google Picker API in one project, create a Web OAuth client with the published JavaScript origin, and create a Picker API key restricted to the app's website and the Picker API. Never enter or publish the OAuth Client Secret. Google Drive sync currently requires an Excel `.xlsx`/`.xls` file; native Google Sheets are not supported.
 
 If an OAuth consent screen is left in Testing, add the relevant Google accounts as test users; test authorizations may expire after seven days. Sharing an OAuth app more broadly may require publishing it and completing Google's verification.

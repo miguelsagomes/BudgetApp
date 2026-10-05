@@ -280,7 +280,7 @@ const I18N = {
   pt: {
     brand:'Orçamento', nav_dashboard:'Dashboard', nav_despesas:'Despesas', nav_config:'Configurações',
     file_none:'sem ficheiro ligado', file_compat:'modo compatibilidade (sem ligação direta)', file_linked:'ligado: ',
-    btn_connect_title:'Ligar a um ficheiro Excel', btn_save_title:'Guardar no Excel', btn_theme_title:'Alternar tema', btn_lang_title:'Switch to English',
+    btn_connect_title:'Ligar a um ficheiro Excel no computador', btn_save_title:'Guardar/descarregar Excel no computador — não guarda no Google Drive', btn_theme_title:'Alternar tema', btn_lang_title:'Switch to English',
     new_month:'+ Novo mês',
 
     dash_title:'Panorama geral',
@@ -337,8 +337,9 @@ const I18N = {
     regular_item:'Item', regular_type:'Tipo', regular_budget:'Orçamento predefinido', no_regulars:'Sem modelos Regulares.',
     move_up:'Mover para cima', move_down:'Mover para baixo',
     drive_sync_title:'Sincronizar com Google Drive', drive_not_connected:'Google Drive desligado',
-    drive_connecting:'A ligar ao Google Drive…', drive_syncing:'A sincronizar…',
+    drive_connecting:'A autorizar conta Google…', drive_syncing:'A sincronizar…',
     drive_synced:'Sincronizado com Google Drive', drive_pending:'Alterações locais pendentes',
+    drive_selecting_file:'Conta autorizada — escolhe agora o ficheiro Excel no Drive.',
     drive_offline:'Offline — alterações guardadas neste dispositivo',
     drive_error:'Erro de sincronização com Google Drive', drive_connect:'Ligar Google Drive',
     drive_initial_title:'Preparar orçamento no Google Drive',
@@ -369,7 +370,8 @@ const I18N = {
     drive_invalid_client_id:'O Client ID deve terminar em .apps.googleusercontent.com.',
     drive_invalid_api_key:'A API key do Google deve começar por AIza.',
     drive_no_credentials:'Ainda não configuraste as credenciais Google neste navegador.',
-    drive_account_connected:'Conta Google ligada',
+    drive_account_connected:'Conta Google autorizada',
+    drive_file_not_selected:'Falta escolher o ficheiro Excel do Drive.',
     drive_howto_title:'How to link Google Drive',
     drive_howto_intro:'Cada pessoa liga a sua própria conta Google e escolhe o seu próprio ficheiro .xlsx. As credenciais identificam a app; não dão acesso aos teus dados financeiros.',
     drive_howto_step1_title:'1. Onde está alojada a app?',
@@ -443,7 +445,7 @@ const I18N = {
   en: {
     brand:'Budget', nav_dashboard:'Dashboard', nav_despesas:'Expenses', nav_config:'Settings',
     file_none:'no file linked', file_compat:'compatibility mode (no direct link)', file_linked:'linked: ',
-    btn_connect_title:'Link an Excel file', btn_save_title:'Save to Excel', btn_theme_title:'Toggle theme', btn_lang_title:'Mudar para português',
+    btn_connect_title:'Link a local Excel file', btn_save_title:'Save/download Excel on this computer — does not save to Google Drive', btn_theme_title:'Toggle theme', btn_lang_title:'Mudar para português',
     new_month:'+ New month',
 
     dash_title:'Overview',
@@ -500,8 +502,9 @@ const I18N = {
     regular_item:'Item', regular_type:'Type', regular_budget:'Default budget', no_regulars:'No recurring templates yet.',
     move_up:'Move up', move_down:'Move down',
     drive_sync_title:'Sync with Google Drive', drive_not_connected:'Google Drive disconnected',
-    drive_connecting:'Connecting to Google Drive…', drive_syncing:'Syncing…',
+    drive_connecting:'Authorizing Google account…', drive_syncing:'Syncing…',
     drive_synced:'Synced with Google Drive', drive_pending:'Local changes pending',
+    drive_selecting_file:'Account authorized — now choose the Excel file in Drive.',
     drive_offline:'Offline — changes saved on this device',
     drive_error:'Google Drive sync error', drive_connect:'Connect Google Drive',
     drive_initial_title:'Set up a budget in Google Drive',
@@ -532,7 +535,8 @@ const I18N = {
     drive_invalid_client_id:'The Client ID must end with .apps.googleusercontent.com.',
     drive_invalid_api_key:'The Google API key must start with AIza.',
     drive_no_credentials:'Google credentials have not been configured in this browser yet.',
-    drive_account_connected:'Google account connected',
+    drive_account_connected:'Google account authorized',
+    drive_file_not_selected:'You still need to choose the Excel file in Drive.',
     drive_howto_title:'How to link Google Drive',
     drive_howto_intro:'Each person links their own Google account and chooses their own .xlsx file. The credentials identify the app; they do not grant access to your financial data.',
     drive_howto_step1_title:'1. Where is the app hosted?',
@@ -1378,6 +1382,7 @@ async function syncDrive(interactive){
         drive.file=await getDriveFile(drive.meta.fileId);
         await syncDriveForCurrentFile(interactive);
       }else if(interactive){
+        setDriveStatus(t('drive_selecting_file'));
         await chooseAndLoadDriveFile();
       }
       return;
@@ -2418,13 +2423,13 @@ function renderConfig(){
   $('createYear').addEventListener('click',openCreateYearModal);
   const driveStatus=$('driveSettingsStatus');
   driveStatus.textContent=drive.user
-    ? `${t('drive_account_connected')}: ${drive.user.email||drive.user.name||''}${drive.file?` — ${drive.file.name}`:''}`
+    ? `${t('drive_account_connected')}: ${drive.user.email||drive.user.name||''}${drive.file?` — ${drive.file.name}`:`. ${t('drive_file_not_selected')}`}`
     : driveConfig.clientId&&driveConfig.pickerApiKey?t('drive_config_saved'):t('drive_no_credentials');
   $('saveDriveCredentials').addEventListener('click',()=>{
     try{
       saveDriveConfig($('driveClientId').value,$('drivePickerApiKey').value);
       driveStatus.textContent=drive.user
-        ? `${t('drive_account_connected')}: ${drive.user.email||drive.user.name||''}${drive.file?` — ${drive.file.name}`:''}`
+        ? `${t('drive_account_connected')}: ${drive.user.email||drive.user.name||''}${drive.file?` — ${drive.file.name}`:`. ${t('drive_file_not_selected')}`}`
         : driveConfig.clientId&&driveConfig.pickerApiKey?t('drive_config_saved'):t('drive_no_credentials');
       showToast(t('drive_config_saved'));
     }catch(error){showToast(error.message);}
@@ -2715,6 +2720,7 @@ function applyStaticText(){
   $('navConfig').textContent = t('nav_config');
   $('btnConnect').title = t('btn_connect_title');
   $('btnSave').title = t('btn_save_title');
+  $('btnSave').setAttribute('aria-label',t('btn_save_title'));
   $('btnDriveSync').title = t('drive_sync_title');
   $('btnDriveSync').setAttribute('aria-label',t('drive_sync_title'));
   $('btnTheme').title = t('btn_theme_title');
