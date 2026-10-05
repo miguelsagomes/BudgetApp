@@ -1334,7 +1334,7 @@ async function requestDriveAuthorization(){
       },
       error_callback:error=>reject(new Error(error.message||'Google authorization was cancelled.'))
     });
-    tokenClient.requestAccessToken({prompt:drive.user?'select_account':''});
+    tokenClient.requestAccessToken(drive.user?{prompt:'select_account'}:{});
   });
 }
 async function chooseAndLoadDriveFile(){
