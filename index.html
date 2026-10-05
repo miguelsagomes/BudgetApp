@@ -44,6 +44,19 @@ body.light .dw-nav button.active{color:#063b39;background:rgba(255,255,255,.6)}
 .dw-topicon{width:34px;height:34px;border:0;background:rgba(255,255,255,.13);color:#ecfeff;
   border-radius:10px;display:grid;place-items:center;cursor:pointer;flex-shrink:0;font-size:15px}
 body.light .dw-topicon{background:rgba(255,255,255,.85);color:#0f172a}
+.dw-menu{position:relative}
+.dw-menupanel{display:none;position:absolute;right:0;top:40px;min-width:230px;z-index:50;padding:6px;border-radius:12px;
+  background:#0b2b2a;box-shadow:0 8px 24px rgba(0,0,0,.35);flex-direction:column;gap:4px}
+.dw-menu.open .dw-menupanel{display:flex}
+.dw-menuhead{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#7ddfd0;padding:4px 8px}
+.dw-menuitem{display:flex;align-items:center;gap:10px;border:0;background:rgba(255,255,255,.08);color:#ecfeff;
+  padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;text-align:left}
+.dw-menuitem:hover{background:rgba(255,255,255,.18)}
+.dw-menuitem b{font-weight:600}
+body.light .dw-menupanel{background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+body.light .dw-menuhead{color:#0f766e}
+body.light .dw-menuitem{background:#e6fffb;color:#0f172a}
+body.light .dw-menuitem:hover{background:#b8f3ea}
 .dw-fileinfo{color:#d7fff6;font-size:11.5px;white-space:nowrap}
 body.light .dw-fileinfo{color:#0f766e}
 .dw-drive-status{color:#d7fff6;font-size:10.5px;white-space:nowrap}
@@ -198,10 +211,22 @@ body.light .dw-icobtn{background:#f1f5f9;border-color:#cbd5e1;color:#475569}
   <span class="dw-fileinfo" id="fileInfo">no file linked</span>
   <button class="dw-btn small" id="btnReconnect" style="display:none"></button>
   <input id="fileInputFallback" type="file" accept=".xlsx,.xls" style="display:none">
-  <button class="dw-topicon" id="btnConnect" title="Link an Excel file">⇪</button>
-  <button class="dw-topicon" id="btnSave" title="Save to Excel">💾</button>
-  <button class="dw-topicon" id="btnDriveSync" title="Sync with Google Drive" aria-label="Sync with Google Drive">☁</button>
-  <button class="dw-topicon" id="btnDriveSave" title="Upload to Drive" aria-label="Upload to Drive">☁💾</button>
+  <div class="dw-menu" id="menuLocal">
+    <button class="dw-topicon dw-menutoggle" id="btnMenuLocal" aria-haspopup="true" aria-expanded="false" title="Local">💻</button>
+    <div class="dw-menupanel" role="menu">
+      <div class="dw-menuhead" id="lblLocal">Local</div>
+      <button class="dw-menuitem" id="btnConnect" role="menuitem" title="Link an Excel file"><span>⬆</span><b id="lblConnect">Upload (open file)</b></button>
+      <button class="dw-menuitem" id="btnSave" role="menuitem" title="Save to Excel"><span>⬇</span><b id="lblSave">Download (save file)</b></button>
+    </div>
+  </div>
+  <div class="dw-menu" id="menuDrive">
+    <button class="dw-topicon dw-menutoggle" id="btnMenuDrive" aria-haspopup="true" aria-expanded="false" title="Drive">☁</button>
+    <div class="dw-menupanel" role="menu">
+      <div class="dw-menuhead" id="lblDrive">Drive</div>
+      <button class="dw-menuitem" id="btnDriveSync" role="menuitem" title="Sync with Google Drive"><span>⬇</span><b id="lblDriveSync">Download (link/refresh)</b></button>
+      <button class="dw-menuitem" id="btnDriveSave" role="menuitem" title="Upload to Drive"><span>⬆</span><b id="lblDriveSave">Upload (save to Drive)</b></button>
+    </div>
+  </div>
   <span class="dw-drive-status" id="driveSyncStatus" aria-live="polite"></span>
   <button class="dw-topicon" id="btnLang" title="Mudar para português" style="font-size:12px;font-weight:800">EN</button>
   <button class="dw-topicon" id="btnTheme" title="Toggle theme">☀</button>
@@ -3349,6 +3374,14 @@ function applyStaticText(){
   $('btnDriveSync').setAttribute('aria-label',t('drive_sync_title'));
   $('btnDriveSave').title = t('drive_save_sheet');
   $('btnDriveSave').setAttribute('aria-label',t('drive_save_sheet'));
+  const pt = ui.lang!=='en';
+  $('lblLocal').textContent = pt ? 'Local (computador)' : 'Local (computer)';
+  $('lblDrive').textContent = 'Google Drive';
+  $('lblConnect').textContent = pt ? 'Carregar (abrir ficheiro)' : 'Upload (open file)';
+  $('lblSave').textContent = pt ? 'Descarregar (guardar ficheiro)' : 'Download (save file)';
+  $('lblDriveSync').textContent = pt ? 'Descarregar (ligar/atualizar)' : 'Download (link/refresh)';
+  $('lblDriveSave').textContent = pt ? 'Enviar (guardar no Drive)' : 'Upload (save to Drive)';
+  $('btnMenuLocal').title = pt ? 'Local' : 'Local';
   $('btnTheme').title = t('btn_theme_title');
   $('btnLang').title = t('btn_lang_title');
   $('btnLang').textContent = ui.lang==='en' ? 'EN' : 'PT';
@@ -4107,6 +4140,18 @@ $('btnConnect').addEventListener('click', connectFile);
 $('btnSave').addEventListener('click', saveToFile);
 $('btnDriveSync').addEventListener('click',handleDriveSyncClick);
 $('btnDriveSave').addEventListener('click',handleGoogleSheetSave);
+document.querySelectorAll('.dw-menu').forEach(menu=>{
+  const toggle=menu.querySelector('.dw-menutoggle');
+  toggle.addEventListener('click',e=>{
+    e.stopPropagation();
+    const open=!menu.classList.contains('open');
+    document.querySelectorAll('.dw-menu.open').forEach(m=>{m.classList.remove('open');m.querySelector('.dw-menutoggle').setAttribute('aria-expanded','false')});
+    menu.classList.toggle('open',open);
+    toggle.setAttribute('aria-expanded',String(open));
+  });
+  menu.querySelector('.dw-menupanel').addEventListener('click',()=>{menu.classList.remove('open');toggle.setAttribute('aria-expanded','false')});
+});
+document.addEventListener('click',()=>document.querySelectorAll('.dw-menu.open').forEach(m=>m.classList.remove('open')));
 $('btnTheme').addEventListener('click', ()=>{
   ui.light = !ui.light;
   document.body.classList.toggle('light', ui.light);
