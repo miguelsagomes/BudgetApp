@@ -201,7 +201,7 @@ body.light .dw-icobtn{background:#f1f5f9;border-color:#cbd5e1;color:#475569}
   <button class="dw-topicon" id="btnConnect" title="Link an Excel file">⇪</button>
   <button class="dw-topicon" id="btnSave" title="Save to Excel">💾</button>
   <button class="dw-topicon" id="btnDriveSync" title="Sync with Google Drive" aria-label="Sync with Google Drive">☁</button>
-  <button class="dw-topicon" id="btnDriveSave" title="Save to Google Sheet" aria-label="Save to Google Sheet">☁💾</button>
+  <button class="dw-topicon" id="btnDriveSave" title="Save to Excel in Google Drive" aria-label="Save to Excel in Google Drive">☁💾</button>
   <span class="dw-drive-status" id="driveSyncStatus" aria-live="polite"></span>
   <button class="dw-topicon" id="btnLang" title="Mudar para português" style="font-size:12px;font-weight:800">EN</button>
   <button class="dw-topicon" id="btnTheme" title="Toggle theme">☀</button>
@@ -336,10 +336,10 @@ const I18N = {
     panel_regulars:'Regulares', regulars_hint:'Modelos usados para preencher automaticamente cada mês.',
     regular_item:'Item', regular_type:'Tipo', regular_budget:'Orçamento predefinido', no_regulars:'Sem modelos Regulares.',
     move_up:'Mover para cima', move_down:'Mover para baixo',
-    drive_sync_title:'Ligar ou atualizar Google Sheets', drive_not_connected:'Google Sheets desligado',
-    drive_connecting:'A autorizar conta Google…', drive_syncing:'A sincronizar Google Sheets…',
-    drive_synced:'Guardado na Google Sheet', drive_pending:'Alterações locais pendentes',
-    drive_selecting_file:'A abrir a Google Sheet configurada…',
+    drive_sync_title:'Ligar ou atualizar Excel no Google Drive', drive_not_connected:'Google Drive desligado',
+    drive_connecting:'A autorizar conta Google…', drive_syncing:'A sincronizar Excel no Google Drive…',
+    drive_synced:'Guardado no Excel do Google Drive', drive_pending:'Alterações locais pendentes',
+    drive_selecting_file:'A abrir o ficheiro Excel configurado…',
     drive_offline:'Offline — alterações guardadas neste dispositivo',
     drive_error:'Erro de sincronização com Google Drive', drive_connect:'Ligar Google Drive',
     drive_initial_title:'Preparar orçamento no Google Drive',
@@ -347,65 +347,66 @@ const I18N = {
     drive_keep_local:'Manter este dispositivo e atualizar o Drive',
     drive_use_remote:'Carregar a versão do Drive (descarta alterações locais)',
     drive_cancel:'Cancelar',
-    drive_native_sheet:'O link configurado não é uma Google Sheet acessível por esta conta.',
+    drive_native_sheet:'Este link aponta para uma Google Sheet nativa. Para este fluxo, indica um ficheiro Excel no Drive.',
+    drive_excel_file_required:'O ficheiro ligado não é um Excel .xlsx/.xls compatível.',
     drive_picker_setup:'Falta ativar a Google Picker API e criar uma API key restrita ao endereço publicado da app.',
     drive_oauth_setup:'O Client ID Google não está configurado.',
     drive_https_required:'A ligação ao Google Drive só funciona na app publicada por HTTPS. Abre https://miguelsagomes.github.io/BudgetApp/; não uses o ficheiro index.html do computador para ligar ao Drive.',
     drive_client_missing:'A biblioteca de autenticação Google não carregou. Verifica a ligação e tenta novamente.',
-    drive_select_file:'Google Sheet do orçamento',
+    drive_select_file:'Ficheiro Excel do orçamento no Google Drive',
     drive_no_permission:'A Google não autorizou o acesso a esta Google Sheet.',
     panel_drive_settings:'Google Drive',
-    drive_settings_hint:'Modo local e modo Google Sheets são ligações separadas.',
+    drive_settings_hint:'O Excel local e o Excel no Google Drive são ligações separadas.',
     drive_link_button:'Ligar ao Google Drive',
     drive_client_id_label:'OAuth Client ID',
-    drive_sheet_url_label:'Link da Google Sheet',
+    drive_sheet_url_label:'Link do ficheiro Excel no Google Drive',
     drive_sheet_url_placeholder:'https://docs.google.com/spreadsheets/d/…',
     drive_save_credentials:'Guardar credenciais',
     drive_how_to:'How to?',
     drive_back_settings:'Voltar às Settings',
-    drive_credentials_note:'O Client ID e o link ficam guardados neste navegador. O OAuth Client ID já vem preenchido; não precisas de um Picker API key para ligar diretamente uma Google Sheet.',
-    drive_secret_warning:'Nunca introduzas nem publiques o Client Secret. A autorização Google dá acesso à Google Sheet indicada e é feita pela tua conta.',
+    drive_credentials_note:'O Client ID e o link ficam guardados neste navegador. Não é preciso Picker API key para ligar diretamente pelo URL.',
+    drive_secret_warning:'Nunca publiques o Client Secret. O acesso solicitado ao Google Drive é amplo, embora a app só use o ficheiro indicado.',
     drive_config_saved:'Configuração guardada neste dispositivo.',
     drive_config_save_failed:'Não foi possível guardar as credenciais',
     drive_invalid_client_id:'O Client ID deve terminar em .apps.googleusercontent.com.',
     drive_invalid_api_key:'A API key do Google deve começar por AIza.',
     drive_no_credentials:'Ainda não configuraste as credenciais Google neste navegador.',
     drive_account_connected:'Conta Google autorizada',
-    drive_file_not_selected:'Falta indicar o link da Google Sheet.',
+    drive_file_not_selected:'Falta indicar o link do ficheiro Excel no Google Drive.',
     drive_local_section:'Excel local (neste computador)',
     drive_local_section_hint:'Abre um Excel do computador com ⇪ e guarda/descarrega com 💾.',
     drive_local_open:'Abrir Excel local',
     drive_local_save:'Guardar Excel local',
-    drive_google_section:'Google Sheets (online)',
-    drive_google_section_hint:'Indica o link da folha, autoriza a conta e guarda com o botão Google.',
-    drive_sheet_link_invalid:'Cola o link completo de uma Google Sheet (docs.google.com/spreadsheets/d/…).',
-    drive_sheet_api_setup:'No Google Cloud, ativa a Google Sheets API para este projeto.',
-    drive_sheet_loaded:'Dados carregados da Google Sheet',
-    drive_sheet_saved:'Alterações guardadas diretamente na Google Sheet',
-    drive_save_sheet:'Guardar na Google Sheet',
-    drive_sheet_empty:'A Google Sheet está vazia.',
-    drive_sheet_initial_message:'Escolhe se queres carregar os dados desta Google Sheet ou substituir o seu conteúdo pelos dados atuais da app.',
-    drive_load_sheet:'Carregar dados da Google Sheet',
-    drive_replace_sheet:'Substituir a Google Sheet pelos dados da app',
-    drive_sheet_error:'Erro na ligação à Google Sheet',
+    drive_google_section:'Excel no Google Drive (online)',
+    drive_google_section_hint:'Indica o link do Excel no Drive, autoriza a conta e guarda diretamente nesse ficheiro.',
+    drive_sheet_link_invalid:'Cola o link completo do ficheiro no Google Drive (docs.google.com/spreadsheets/d/…).',
+    drive_sheet_api_setup:'No Google Cloud, ativa a Google Drive API para este projeto.',
+    drive_sheet_loaded:'Dados carregados do Excel no Google Drive',
+    drive_sheet_saved:'Alterações guardadas diretamente no Excel do Google Drive',
+    drive_save_sheet:'Guardar no Excel do Google Drive',
+    drive_sheet_empty:'O ficheiro Excel no Google Drive está vazio.',
+    drive_sheet_initial_message:'Escolhe se queres carregar os dados deste Excel ou substituir o seu conteúdo pelos dados atuais da app.',
+    drive_load_sheet:'Carregar dados do Excel no Drive',
+    drive_replace_sheet:'Substituir o Excel do Drive pelos dados da app',
+    drive_sheet_error:'Erro na ligação ao ficheiro do Google Drive',
     drive_howto_title:'How to link Google Drive',
-    drive_howto_intro:'Cada pessoa autoriza a sua própria conta Google e liga a sua própria Google Sheet. A app lê e grava os dados nessa folha.',
+    drive_howto_intro:'Cada pessoa autoriza a sua própria conta Google e liga o seu próprio ficheiro Excel no Drive. A app lê e grava os dados nesse ficheiro.',
     drive_howto_step1_title:'1. Onde está alojada a app?',
     drive_howto_step1:'Para usares este site partilhado, não precisas de criar uma conta, repositório ou site GitHub. O GitHub Pages já está configurado pelo dono da app. Só precisas de GitHub se quiseres publicar a tua própria cópia da aplicação.',
     drive_howto_step2_title:'2. Cria um projeto Google Cloud',
     drive_howto_step2:'Abre a Google Cloud Console, cria um projeto ou escolhe um existente. Usa o mesmo projeto para ativar APIs e criar as credenciais abaixo.',
     drive_howto_step3_title:'3. Ativa as APIs',
-    drive_howto_step3:'Em APIs e serviços → Biblioteca, ativa Google Sheets API. A app usa essa API para ler e gravar diretamente na folha indicada.',
+    drive_howto_step3:'Em APIs e serviços → Biblioteca, ativa Google Drive API. A app usa essa API para ler e atualizar diretamente o ficheiro Excel indicado.',
     drive_howto_step4_title:'4. Configura o ecrã de consentimento OAuth',
     drive_howto_step4:'Escolhe utilizadores Externos. Se a app ficar em Testing, adiciona cada conta Google como utilizador de teste; as autorizações de teste podem expirar ao fim de 7 dias. Para partilhar com mais pessoas, a app OAuth poderá ter de ser publicada e verificada pela Google.',
     drive_howto_step5_title:'5. Cria o OAuth Client ID',
     drive_howto_step5:'Em Credenciais → Criar credenciais → ID de cliente OAuth, escolhe Aplicação Web. Em Origens JavaScript autorizadas adiciona exatamente https://miguelsagomes.github.io. Não precisas de URI de redirecionamento para esta app.',
-    drive_howto_step6_title:'6. Autoriza o acesso à Google Sheets API',
-    drive_howto_step6:'Em Acesso a dados, adiciona o âmbito https://www.googleapis.com/auth/spreadsheets. É este âmbito que permite editar a folha; o Google pode exigir verificação para disponibilizar a app a outras pessoas.',
+    drive_howto_step6_title:'6. Autoriza o acesso ao Google Drive',
+    drive_howto_step6:'Em Acesso a dados, adiciona https://www.googleapis.com/auth/drive. Este âmbito permite à app atualizar o ficheiro indicado, mas concede acesso amplo ao Drive e pode exigir verificação Google.',
     drive_howto_step7_title:'7. Configura a ligação na app',
-    drive_howto_step7:'O Client ID já vem preenchido. Cola o link completo da Google Sheet nas Settings e guarda. Não é necessário Picker API key nem App ID.',
+    drive_howto_step7:'O Client ID já vem preenchido. Cola o link completo do ficheiro Excel nas Settings e guarda. Não é necessário Picker API key nem App ID.',
     drive_howto_step8_title:'8. Liga, carrega e grava na folha',
-    drive_howto_step8:'Carrega em Ligar ao Google Sheets, autoriza a conta e escolhe se carregas os dados da folha ou os dados locais. Usa Guardar na Google Sheet para escrever diretamente na folha.',
+    drive_howto_step8:'Carrega em Ligar ao Google Drive, autoriza a conta e escolhe se carregas os dados do Excel ou os dados locais. Usa Guardar no Excel do Google Drive para escrever diretamente no ficheiro.',
     drive_howto_links:'Abrir Google Cloud Console',
     close:'Fechar',
     show_investment_values:'Mostrar valores de mercado', market_value:'Valor de mercado', market_value_hint:'Valor do investimento neste mês (opcional).', market_as_of:'Registado em {m}',
@@ -517,10 +518,10 @@ const I18N = {
     panel_regulars:'Recurring templates', regulars_hint:'Templates automatically used to prefill each month.',
     regular_item:'Item', regular_type:'Type', regular_budget:'Default budget', no_regulars:'No recurring templates yet.',
     move_up:'Move up', move_down:'Move down',
-    drive_sync_title:'Link or refresh Google Sheets', drive_not_connected:'Google Sheets disconnected',
-    drive_connecting:'Authorizing Google account…', drive_syncing:'Syncing Google Sheets…',
-    drive_synced:'Saved to Google Sheet', drive_pending:'Local changes pending',
-    drive_selecting_file:'Opening the configured Google Sheet…',
+    drive_sync_title:'Link or refresh Excel in Google Drive', drive_not_connected:'Google Drive disconnected',
+    drive_connecting:'Authorizing Google account…', drive_syncing:'Syncing Excel in Google Drive…',
+    drive_synced:'Saved to Excel in Google Drive', drive_pending:'Local changes pending',
+    drive_selecting_file:'Opening the configured Excel file…',
     drive_offline:'Offline — changes saved on this device',
     drive_error:'Google Drive sync error', drive_connect:'Connect Google Drive',
     drive_initial_title:'Set up a budget in Google Drive',
@@ -528,63 +529,64 @@ const I18N = {
     drive_keep_local:'Keep this device and update Drive',
     drive_use_remote:'Load the Drive version (discard local changes)',
     drive_cancel:'Cancel',
-    drive_native_sheet:'The configured link is not a Google Sheet accessible by this account.',
+    drive_native_sheet:'This link points to a native Google Sheet. For this flow, provide an Excel file in Drive.',
+    drive_excel_file_required:'The linked file is not a compatible .xlsx/.xls Excel workbook.',
     drive_picker_setup:'Enable the Google Picker API and create an API key restricted to the published app origin.',
     drive_oauth_setup:'The Google Client ID is not configured.',
     drive_https_required:'Google Drive linking only works in the published HTTPS app. Open https://miguelsagomes.github.io/BudgetApp/; do not use the local index.html file to link Drive.',
     drive_client_missing:'The Google authentication library did not load. Check your connection and try again.',
     panel_drive_settings:'Google Drive',
-    drive_settings_hint:'Local and Google Sheets are separate storage connections.',
+    drive_settings_hint:'Local Excel and Excel in Google Drive are separate storage connections.',
     drive_link_button:'Link to Google Drive',
     drive_client_id_label:'OAuth Client ID',
-    drive_sheet_url_label:'Google Sheet link',
+    drive_sheet_url_label:'Google Drive Excel file link',
     drive_sheet_url_placeholder:'https://docs.google.com/spreadsheets/d/…',
     drive_save_credentials:'Save credentials',
     drive_how_to:'How to?',
     drive_back_settings:'Back to Settings',
-    drive_credentials_note:'The Client ID and link are saved in this browser. The OAuth Client ID is prefilled; no Picker API key is needed to link a Google Sheet directly.',
-    drive_secret_warning:'Never enter or publish the Client Secret. Google authorization grants access to the specified Google Sheet through your account.',
+    drive_credentials_note:'The Client ID and link are saved in this browser. No Picker API key is needed to link directly by URL.',
+    drive_secret_warning:'Never publish the Client Secret. The requested Google Drive permission is broad, although the app only uses the specified file.',
     drive_config_saved:'Configuration saved on this device.',
     drive_config_save_failed:'Could not save credentials',
     drive_invalid_client_id:'The Client ID must end with .apps.googleusercontent.com.',
     drive_invalid_api_key:'The Google API key must start with AIza.',
     drive_no_credentials:'Google credentials have not been configured in this browser yet.',
     drive_account_connected:'Google account authorized',
-    drive_file_not_selected:'You still need to enter the Google Sheet link.',
+    drive_file_not_selected:'You still need to enter the Google Drive Excel file link.',
     drive_local_section:'Local Excel (on this computer)',
     drive_local_section_hint:'Open an Excel file from this computer with ⇪ and save/download with 💾.',
     drive_local_open:'Open local Excel',
     drive_local_save:'Save local Excel',
-    drive_google_section:'Google Sheets (online)',
-    drive_google_section_hint:'Enter the sheet link, authorize the account, and save with the Google button.',
-    drive_sheet_link_invalid:'Paste the full link to a Google Sheet (docs.google.com/spreadsheets/d/…).',
-    drive_sheet_api_setup:'Enable the Google Sheets API in this Google Cloud project.',
-    drive_sheet_loaded:'Data loaded from Google Sheet',
-    drive_sheet_saved:'Changes saved directly to Google Sheet',
-    drive_save_sheet:'Save to Google Sheet',
-    drive_sheet_empty:'The Google Sheet is empty.',
-    drive_sheet_initial_message:'Choose whether to load data from this Google Sheet or replace its contents with the current app data.',
-    drive_load_sheet:'Load data from Google Sheet',
-    drive_replace_sheet:'Replace Google Sheet with app data',
-    drive_sheet_error:'Google Sheet connection error',
+    drive_google_section:'Excel in Google Drive (online)',
+    drive_google_section_hint:'Enter the Drive Excel link, authorize the account, and save directly to that file.',
+    drive_sheet_link_invalid:'Paste the full Google Drive file link (docs.google.com/spreadsheets/d/…).',
+    drive_sheet_api_setup:'Enable the Google Drive API in this Google Cloud project.',
+    drive_sheet_loaded:'Data loaded from Excel in Google Drive',
+    drive_sheet_saved:'Changes saved directly to Excel in Google Drive',
+    drive_save_sheet:'Save to Excel in Google Drive',
+    drive_sheet_empty:'The Excel file in Google Drive is empty.',
+    drive_sheet_initial_message:'Choose whether to load data from this Excel file or replace its contents with the current app data.',
+    drive_load_sheet:'Load data from Excel in Drive',
+    drive_replace_sheet:'Replace Drive Excel with app data',
+    drive_sheet_error:'Google Drive file connection error',
     drive_howto_title:'How to link Google Drive',
-    drive_howto_intro:'Each person authorizes their own Google account and links their own Google Sheet. The app reads and writes the data in that sheet.',
+    drive_howto_intro:'Each person authorizes their own Google account and links their own Excel file in Drive. The app reads and writes data in that file.',
     drive_howto_step1_title:'1. Where is the app hosted?',
     drive_howto_step1:'To use this shared site, you do not need to create a GitHub account, repository, or website. GitHub Pages is already set up by the app owner. You only need GitHub if you want to publish your own copy of the app.',
     drive_howto_step2_title:'2. Create a Google Cloud project',
     drive_howto_step2:'Open Google Cloud Console and create or select a project. Use the same project to enable APIs and create the credentials below.',
     drive_howto_step3_title:'3. Enable the APIs',
-    drive_howto_step3:'In APIs & Services → Library, enable Google Sheets API. The app uses it to read and write directly to the specified sheet.',
+    drive_howto_step3:'In APIs & Services → Library, enable Google Drive API. The app uses it to read and update the specified Excel file.',
     drive_howto_step4_title:'4. Configure the OAuth consent screen',
     drive_howto_step4:'Choose External users. If the app is in Testing, add each Google account as a test user; test authorizations may expire after 7 days. To share with more people, the OAuth app may need to be published and verified by Google.',
     drive_howto_step5_title:'5. Create the OAuth Client ID',
     drive_howto_step5:'In Credentials → Create credentials → OAuth client ID, choose Web application. Under Authorized JavaScript origins add exactly https://miguelsagomes.github.io. This app does not need a redirect URI.',
-    drive_howto_step6_title:'6. Authorize access to Google Sheets API',
-    drive_howto_step6:'In Data access, add the https://www.googleapis.com/auth/spreadsheets scope. This scope allows editing the sheet; Google may require verification before the app is shared with others.',
+    drive_howto_step6_title:'6. Authorize Google Drive access',
+    drive_howto_step6:'In Data access, add the https://www.googleapis.com/auth/drive scope. This lets the app update the specified file, but OAuth consent grants broad Drive access and may require Google verification.',
     drive_howto_step7_title:'7. Configure the app connection',
-    drive_howto_step7:'The Client ID is prefilled. Paste the full Google Sheet link in Settings and save. No Picker API key or App ID is required.',
+    drive_howto_step7:'The Client ID is prefilled. Paste the full Excel file link in Settings and save. No Picker API key or App ID is required.',
     drive_howto_step8_title:'8. Link, load, and save to the sheet',
-    drive_howto_step8:'Click Link to Google Sheets, authorize the account, then choose whether to load sheet data or local data. Use Save to Google Sheet to write directly to the sheet.',
+    drive_howto_step8:'Click Link to Google Drive, authorize the account, then choose whether to load Excel data or local data. Use Save to Excel in Google Drive to write directly to the file.',
     drive_howto_links:'Open Google Cloud Console',
     close:'Close',
     show_investment_values:'Show market values', market_value:'Market value', market_value_hint:'Investment value for this month (optional).', market_as_of:'Recorded for {m}',
@@ -682,9 +684,11 @@ const LS_KEY = 'orcamento-app-full-v1';
 let stateStorageKey=LS_KEY;
 const DRIVE_CONFIG_KEY='budget-drive-app-config-v1';
 const DEFAULT_DRIVE_CLIENT_ID='581263132861-g4b2dijgbp4tannrm3nkl44668f4jds9.apps.googleusercontent.com';
-const DRIVE_SCOPE='https://www.googleapis.com/auth/spreadsheets openid email';
+const DRIVE_SCOPE='https://www.googleapis.com/auth/drive openid email';
 const SHEETS_API='https://sheets.googleapis.com/v4/spreadsheets';
 const GOOGLE_SHEET_MIME='application/vnd.google-apps.spreadsheet';
+const XLSX_MIME='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+const DRIVE_MIME=XLSX_MIME;
 const APP_RESERVED_SHEETS=new Set(['Categorias','Classificacoes','Globais','Poupancas','Dividas','Regulares','Notas']);
 function loadDriveConfig(){
   try{
@@ -823,8 +827,14 @@ function activateDriveAccount(user){
   }
   drive.user=user;
   drive.meta=readDriveMeta(user.sub);
-  drive.sheetId=drive.meta?.spreadsheetId||null;
-  drive.file=drive.meta?{id:drive.meta.spreadsheetId,name:drive.meta.title,mimeType:GOOGLE_SHEET_MIME}:null;
+  drive.sheetId=drive.meta?.fileId||drive.meta?.spreadsheetId||null;
+  drive.file=drive.meta?{
+    id:drive.sheetId,
+    name:drive.meta.fileName||drive.meta.title,
+    mimeType:drive.meta.mimeType||GOOGLE_SHEET_MIME,
+    version:drive.meta.version,
+    modifiedTime:drive.meta.modifiedTime
+  }:null;
   renderAll();
 }
 
@@ -1281,7 +1291,7 @@ async function driveRequest(url,options={}){
   return response;
 }
 async function getDriveFile(fileId){
-  const response=await driveRequest(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(fileId)}?fields=id,name,mimeType,modifiedTime,version,webViewLink`);
+  const response=await driveApiRequest(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(fileId)}?fields=id,name,mimeType,modifiedTime,version,webViewLink`);
   return response.json();
 }
 async function hashState(state){
@@ -1528,7 +1538,7 @@ function queueDriveAutosync(){
   drive.autoTimer=setTimeout(()=>runGoogleSheetSync(false),1200);
 }
 async function runGoogleSheetSync(interactive){
-  try{await syncGoogleSheet(interactive);}
+  try{await syncDriveTarget(interactive);}
   catch(error){
     setDriveStatus(t('drive_sheet_error'));
     showToast(`${t('drive_sheet_error')}: ${error.message}`);
@@ -1560,6 +1570,170 @@ async function hashJson(value){
   return Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,'0')).join('');
 }
 async function hashState(state){return hashJson(state);}
+async function driveApiRequest(url,options={}){
+  const headers=new Headers(options.headers||{});
+  headers.set('Authorization',['Bearer',drive.token].join(' '));
+  const response=await fetch(url,{...options,headers});
+  if(!response.ok){
+    const detail=await response.text();
+    throw new Error(`Google Drive API ${response.status}: ${detail.slice(0,500)}`);
+  }
+  return response;
+}
+async function getDriveWorkbookSnapshot(file){
+  if(file.mimeType!==XLSX_MIME&&file.mimeType!=='application/vnd.ms-excel'){
+    throw new Error(t('drive_excel_file_required'));
+  }
+  const response=await driveApiRequest(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(file.id)}?alt=media`);
+  const workbook=XLSX.read(await response.arrayBuffer(),{type:'array'});
+  const previousState=STATE;
+  let state;
+  try{
+    loadWorkbook(workbook,{persist:false});
+    state=JSON.parse(JSON.stringify(STATE));
+  }finally{STATE=previousState;}
+  return {file,state,remoteHash:await hashState(state)};
+}
+function saveDriveWorkbookMeta(file,stateHash){
+  drive.sheetId=file.id;
+  drive.file=file;
+  drive.meta={
+    fileId:file.id,
+    fileName:file.name,
+    mimeType:file.mimeType,
+    modifiedTime:file.modifiedTime,
+    version:file.version,
+    localHash:stateHash
+  };
+  storeDriveMeta();
+  updateFileInfo();
+  setDriveStatus(t('drive_synced'));
+}
+function applyDriveWorkbookState(state){
+  drive.suppressAutosync=true;
+  try{
+    STATE=normalizeState(JSON.parse(JSON.stringify(state)));
+    saveLocal();
+    markClean();
+  }finally{drive.suppressAutosync=false;}
+  renderAll();
+}
+async function writeDriveWorkbook(file){
+  const content=XLSX.write(buildWorkbook(),{type:'array',bookType:'xlsx'});
+  const response=await driveApiRequest(
+    `https://www.googleapis.com/upload/drive/v3/files/${encodeURIComponent(file.id)}?uploadType=media&fields=id,name,mimeType,modifiedTime,version,webViewLink`,
+    {method:'PATCH',headers:{'Content-Type':XLSX_MIME},body:content}
+  );
+  return response.json();
+}
+async function syncDriveWorkbook(interactive,file){
+  if(!drive.user) throw new Error(t('drive_not_connected'));
+  if(!navigator.onLine){setDriveStatus(t('drive_offline'));return;}
+  if(drive.busy) return;
+  drive.busy=true;
+  setDriveStatus(t('drive_syncing'));
+  try{
+    const remoteFile=file||await getDriveFile(drive.sheetId||extractSpreadsheetId(driveConfig.sheetUrl));
+    const snapshot=await getDriveWorkbookSnapshot(remoteFile);
+    const previous=drive.meta?.fileId===remoteFile.id?drive.meta:null;
+    const unbound=drive.unboundState&&!stateHasData(STATE)?drive.unboundState:null;
+    const localState=unbound||STATE;
+    const localHash=await hashState(localState);
+    const localChanged=previous?localHash!==previous.localHash:stateHasData(localState);
+    const remoteChanged=previous?String(remoteFile.version)!==String(previous.version):stateHasData(snapshot.state);
+    const keepLocal=async()=>{
+      if(unbound) STATE=normalizeState(JSON.parse(JSON.stringify(unbound)));
+      drive.suppressAutosync=true;
+      try{saveLocal();}
+      finally{drive.suppressAutosync=false;}
+      const updated=await writeDriveWorkbook(remoteFile);
+      markClean();
+      saveDriveWorkbookMeta(updated,await hashState(STATE));
+      drive.unboundState=null;
+      showToast(t('drive_sheet_saved'));
+    };
+    if(previous&&localChanged&&remoteChanged){
+      if(!interactive){setDriveStatus(t('drive_pending'));return;}
+      const choice=await openDriveChoiceModal(t('drive_conflict_title'),t('drive_conflict_message'),[
+        {id:'local',label:t('drive_keep_local'),primary:true},
+        {id:'remote',label:t('drive_use_remote')},
+        {id:'cancel',label:t('drive_cancel')}
+      ]);
+      if(choice==='local') await keepLocal();
+      else if(choice==='remote'){
+        applyDriveWorkbookState(snapshot.state);
+        saveDriveWorkbookMeta(remoteFile,await hashState(STATE));
+      }else setDriveStatus(t('drive_pending'));
+      return;
+    }
+    if(previous&&remoteChanged&&!localChanged){
+      applyDriveWorkbookState(snapshot.state);
+      saveDriveWorkbookMeta(remoteFile,await hashState(STATE));
+      showToast(t('drive_sheet_loaded'));
+      return;
+    }
+    if(previous&&localChanged){
+      await keepLocal();
+      return;
+    }
+    if(!previous){
+      const localHasData=stateHasData(localState);
+      const remoteHasData=stateHasData(snapshot.state);
+      if(localHasData&&remoteHasData){
+        const choice=await openDriveChoiceModal(t('drive_initial_title'),t('drive_initial_message'),[
+          {id:'local',label:t('drive_keep_local'),primary:true},
+          {id:'remote',label:t('drive_use_remote')},
+          {id:'cancel',label:t('drive_cancel')}
+        ]);
+        if(choice==='local') await keepLocal();
+        else if(choice==='remote'){
+          applyDriveWorkbookState(snapshot.state);
+          saveDriveWorkbookMeta(remoteFile,await hashState(STATE));
+          drive.unboundState=null;
+          showToast(t('drive_sheet_loaded'));
+        }else setDriveStatus(t('drive_pending'));
+        return;
+      }
+      if(localHasData){
+        if(!interactive){setDriveStatus(t('drive_pending'));return;}
+        const choice=await openDriveChoiceModal(t('drive_initial_title'),t('drive_initial_message'),[
+          {id:'local',label:t('drive_keep_local'),primary:true},
+          {id:'remote',label:t('drive_use_remote')},
+          {id:'cancel',label:t('drive_cancel')}
+        ]);
+        if(choice==='cancel'||!choice){setDriveStatus(t('drive_pending'));return;}
+        if(choice==='remote'){
+          applyDriveWorkbookState(snapshot.state);
+          saveDriveWorkbookMeta(remoteFile,await hashState(STATE));
+          drive.unboundState=null;
+          showToast(t('drive_sheet_loaded'));
+          return;
+        }
+        await keepLocal();
+        return;
+      }
+      if(remoteHasData){
+        applyDriveWorkbookState(snapshot.state);
+        saveDriveWorkbookMeta(remoteFile,await hashState(STATE));
+        showToast(t('drive_sheet_loaded'));
+        return;
+      }
+      const updated=await writeDriveWorkbook(remoteFile);
+      saveDriveWorkbookMeta(updated,await hashState(STATE));
+      showToast(t('drive_sheet_saved'));
+      return;
+    }
+    saveDriveWorkbookMeta(remoteFile,localHash);
+  }finally{drive.busy=false;}
+}
+async function syncDriveTarget(interactive,requestedFileId=null){
+  const fileId=requestedFileId||drive.sheetId||extractSpreadsheetId(driveConfig.sheetUrl);
+  const file=await getDriveFile(fileId);
+  drive.file=file;
+  drive.sheetId=file.id;
+  if(file.mimeType===GOOGLE_SHEET_MIME) throw new Error(t('drive_native_sheet'));
+  return syncDriveWorkbook(interactive,file);
+}
 async function getGoogleSheetSnapshot(spreadsheetId){
   const metadataResponse=await googleApiRequest(`${SHEETS_API}/${encodeURIComponent(spreadsheetId)}?fields=spreadsheetId,properties(title),sheets(properties(sheetId,title,index))`);
   const metadata=await metadataResponse.json();
@@ -1686,7 +1860,7 @@ async function requestDriveAuthorization(){
         drive.token=response.access_token;
         drive.tokenExpiresAt=Date.now()+Number(response.expires_in||3600)*1000;
         try{
-          const profileResponse=await googleApiRequest('https://www.googleapis.com/oauth2/v3/userinfo');
+          const profileResponse=await driveApiRequest('https://www.googleapis.com/oauth2/v3/userinfo');
           const profile=await profileResponse.json();
           activateDriveAccount(profile);
           resolve(profile);
@@ -1792,7 +1966,7 @@ async function connectGoogleDrive(){
   if(!driveConfig.sheetUrl) throw new Error(t('drive_file_not_selected'));
   const sheetId=extractSpreadsheetId(driveConfig.sheetUrl);
   ui.storageMode='sheets';
-  await syncGoogleSheet(true,sheetId);
+  await syncDriveTarget(true,sheetId);
 }
 function handleDriveSyncClick(){
   if(location.protocol!=='https:'){showToast(t('drive_https_required'));return;}
@@ -1819,7 +1993,7 @@ function handleGoogleSheetSave(){
     if(!drive.user||!drive.token||Date.now()>=drive.tokenExpiresAt) await requestDriveAuthorization();
     if(!driveConfig.sheetUrl) throw new Error(t('drive_file_not_selected'));
     ui.storageMode='sheets';
-    await syncGoogleSheet(true,extractSpreadsheetId(driveConfig.sheetUrl));
+    await syncDriveTarget(true,extractSpreadsheetId(driveConfig.sheetUrl));
   })().catch(error=>{
     setDriveStatus(t('drive_sheet_error'));
     showToast(`${t('drive_sheet_error')}: ${error.message}`);
