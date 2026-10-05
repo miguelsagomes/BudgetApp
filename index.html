@@ -153,7 +153,11 @@ body.light .dw-icobtn{background:#f1f5f9;border-color:#cbd5e1;color:#475569}
   padding:20px;margin:auto}
 .dw-field{display:block;font-size:11.5px;color:var(--muted);margin-bottom:12px}
 .dw-field span{display:block;margin-bottom:5px}
-
+.dw-drive-credential{border-color:#60a5fa!important;box-shadow:inset 3px 0 #60a5fa}
+.dw-drive-howto-step{padding:11px 12px;margin:9px 0;border:1px solid var(--line);border-left:4px solid #60a5fa;border-radius:10px;background:var(--card)}
+.dw-drive-howto-step:nth-of-type(even){border-left-color:#34d399}
+.dw-drive-howto-step h3{font-size:13px;margin:0 0 5px;color:var(--ink)}
+.dw-drive-howto-step p{font-size:12px;line-height:1.5;margin:0;color:var(--muted)}
 .dw-check{width:16px;height:16px;accent-color:var(--brand);cursor:pointer}
 .dw-toast{position:fixed;right:18px;bottom:18px;background:var(--surface);border:1px solid var(--line);
   border-radius:14px;padding:12px 15px;z-index:80;font-size:13px;box-shadow:0 16px 34px rgba(0,0,0,.35);
@@ -349,6 +353,42 @@ const I18N = {
     drive_select_file:'Escolhe o ficheiro Excel do orçamento no Google Drive.',
     drive_no_permission:'O Drive não autorizou o acesso a este ficheiro.',
     drive_open_file:'Abrir no Google Drive',
+    panel_drive_settings:'Google Drive',
+    drive_settings_hint:'Liga a tua conta Google e escolhe o teu próprio ficheiro Excel.',
+    drive_link_button:'Ligar ao Google Drive',
+    drive_client_id_label:'OAuth Client ID',
+    drive_picker_key_label:'Google Picker API key',
+    drive_save_credentials:'Guardar credenciais',
+    drive_how_to:'How to?',
+    drive_back_settings:'Voltar às Settings',
+    drive_credentials_note:'Ficam guardadas neste navegador e neste dispositivo; não precisas de as voltar a introduzir sempre que abres a app. Noutro dispositivo, configura-as uma vez nesse navegador.',
+    drive_secret_warning:'Nunca introduzas nem publiques o Client Secret. A API key do Picker é pública no browser, por isso restringe-a ao site desta app e apenas à Google Picker API.',
+    drive_config_saved:'Configuração guardada neste dispositivo.',
+    drive_config_save_failed:'Não foi possível guardar as credenciais',
+    drive_invalid_client_id:'O Client ID deve terminar em .apps.googleusercontent.com.',
+    drive_invalid_api_key:'A API key do Google deve começar por AIza.',
+    drive_no_credentials:'Ainda não configuraste as credenciais Google neste navegador.',
+    drive_account_connected:'Conta Google ligada',
+    drive_howto_title:'How to link Google Drive',
+    drive_howto_intro:'Cada pessoa liga a sua própria conta Google e escolhe o seu próprio ficheiro .xlsx. As credenciais identificam a app; não dão acesso aos teus dados financeiros.',
+    drive_howto_step1_title:'1. Onde está alojada a app?',
+    drive_howto_step1:'Para usares este site partilhado, não precisas de criar uma conta, repositório ou site GitHub. O GitHub Pages já está configurado pelo dono da app. Só precisas de GitHub se quiseres publicar a tua própria cópia da aplicação.',
+    drive_howto_step2_title:'2. Cria um projeto Google Cloud',
+    drive_howto_step2:'Abre a Google Cloud Console, cria um projeto ou escolhe um existente. Usa o mesmo projeto para ativar APIs e criar as credenciais abaixo.',
+    drive_howto_step3_title:'3. Ativa as APIs',
+    drive_howto_step3:'Em APIs e serviços → Biblioteca, ativa Google Drive API e Google Picker API. A Drive API lê e grava o Excel; o Picker permite escolher o ficheiro.',
+    drive_howto_step4_title:'4. Configura o ecrã de consentimento OAuth',
+    drive_howto_step4:'Escolhe utilizadores Externos. Se a app ficar em Testing, adiciona cada conta Google como utilizador de teste; as autorizações de teste podem expirar ao fim de 7 dias. Para partilhar com mais pessoas, a app OAuth poderá ter de ser publicada e verificada pela Google.',
+    drive_howto_step5_title:'5. Cria o OAuth Client ID',
+    drive_howto_step5:'Em Credenciais → Criar credenciais → ID de cliente OAuth, escolhe Aplicação Web. Em Origens JavaScript autorizadas adiciona exatamente https://miguelsagomes.github.io. Não precisas de URI de redirecionamento para esta app.',
+    drive_howto_step6_title:'6. Cria a chave do Picker',
+    drive_howto_step6:'Em Credenciais → Criar credenciais → Chave de API. Restringe Aplicação a Sites com https://miguelsagomes.github.io/BudgetApp/* e restringe a chave apenas à Google Picker API. A Drive API não precisa de estar associada a esta chave.',
+    drive_howto_step7_title:'7. Guarda os dois valores aqui',
+    drive_howto_step7:'Copia o OAuth Client ID e a API key do Picker para os dois campos coloridos nas Settings e guarda. Estes valores ficam neste browser/dispositivo, não no Excel.',
+    drive_howto_step8_title:'8. Liga a tua conta e escolhe o Excel',
+    drive_howto_step8:'Carrega em Ligar ao Google Drive, autoriza a tua conta e escolhe o teu ficheiro .xlsx. Folhas nativas Google Sheets ainda não são suportadas pela sincronização Excel.',
+    drive_howto_links:'Abrir Google Cloud Console',
+    close:'Fechar',
     show_investment_values:'Mostrar valores de mercado', market_value:'Valor de mercado', market_value_hint:'Valor do investimento neste mês (opcional).', market_as_of:'Registado em {m}',
     opt_no_category:'Sem categoria', opt_no_classification:'Sem classificação',
     opt_new_category:'+ Criar nova categoria…', opt_new_classification:'+ Criar nova classificação…',
@@ -475,6 +515,42 @@ const I18N = {
     drive_select_file:'Choose the budget Excel file in Google Drive.',
     drive_no_permission:'Google Drive did not authorize access to this file.',
     drive_open_file:'Open in Google Drive',
+    panel_drive_settings:'Google Drive',
+    drive_settings_hint:'Link your Google account and choose your own Excel file.',
+    drive_link_button:'Link to Google Drive',
+    drive_client_id_label:'OAuth Client ID',
+    drive_picker_key_label:'Google Picker API key',
+    drive_save_credentials:'Save credentials',
+    drive_how_to:'How to?',
+    drive_back_settings:'Back to Settings',
+    drive_credentials_note:'Saved in this browser and on this device; you do not need to enter them every time you open the app. Configure them once per browser on other devices.',
+    drive_secret_warning:'Never enter or publish the Client Secret. The Picker API key is public in the browser, so restrict it to this app site and only the Google Picker API.',
+    drive_config_saved:'Configuration saved on this device.',
+    drive_config_save_failed:'Could not save credentials',
+    drive_invalid_client_id:'The Client ID must end with .apps.googleusercontent.com.',
+    drive_invalid_api_key:'The Google API key must start with AIza.',
+    drive_no_credentials:'Google credentials have not been configured in this browser yet.',
+    drive_account_connected:'Google account connected',
+    drive_howto_title:'How to link Google Drive',
+    drive_howto_intro:'Each person links their own Google account and chooses their own .xlsx file. The credentials identify the app; they do not grant access to your financial data.',
+    drive_howto_step1_title:'1. Where is the app hosted?',
+    drive_howto_step1:'To use this shared site, you do not need to create a GitHub account, repository, or website. GitHub Pages is already set up by the app owner. You only need GitHub if you want to publish your own copy of the app.',
+    drive_howto_step2_title:'2. Create a Google Cloud project',
+    drive_howto_step2:'Open Google Cloud Console and create or select a project. Use the same project to enable APIs and create the credentials below.',
+    drive_howto_step3_title:'3. Enable the APIs',
+    drive_howto_step3:'In APIs & Services → Library, enable Google Drive API and Google Picker API. Drive API reads and writes the Excel file; Picker lets you choose it.',
+    drive_howto_step4_title:'4. Configure the OAuth consent screen',
+    drive_howto_step4:'Choose External users. If the app is in Testing, add each Google account as a test user; test authorizations may expire after 7 days. To share with more people, the OAuth app may need to be published and verified by Google.',
+    drive_howto_step5_title:'5. Create the OAuth Client ID',
+    drive_howto_step5:'In Credentials → Create credentials → OAuth client ID, choose Web application. Under Authorized JavaScript origins add exactly https://miguelsagomes.github.io. This app does not need a redirect URI.',
+    drive_howto_step6_title:'6. Create the Picker API key',
+    drive_howto_step6:'In Credentials → Create credentials → API key. Restrict Application to websites with https://miguelsagomes.github.io/BudgetApp/* and restrict the key to Google Picker API only. Drive API does not need to be linked to this key.',
+    drive_howto_step7_title:'7. Save the two values here',
+    drive_howto_step7:'Copy the OAuth Client ID and Picker API key into the two highlighted Settings fields and save. These values stay in this browser/device, not in the Excel file.',
+    drive_howto_step8_title:'8. Link your account and choose the Excel file',
+    drive_howto_step8:'Click Link to Google Drive, authorize your account, and choose your .xlsx file. Native Google Sheets are not yet supported by Excel sync.',
+    drive_howto_links:'Open Google Cloud Console',
+    close:'Close',
     show_investment_values:'Show market values', market_value:'Market value', market_value_hint:'Investment value for this month (optional).', market_as_of:'Recorded for {m}',
     opt_no_category:'No category', opt_no_classification:'No classification',
     opt_new_category:'+ Create new category…', opt_new_classification:'+ Create new classification…',
@@ -568,11 +644,23 @@ let ui = {light:false, lang:(localStorage.getItem('orcamento-lang')||'en'), page
 
 const LS_KEY = 'orcamento-app-full-v1';
 let stateStorageKey=LS_KEY;
-const DRIVE_CLIENT_ID='581263132861-g4b2dijgbp4tannrm3nkl44668f4jds9.apps.googleusercontent.com';
-const DRIVE_PICKER_API_KEY='';
-const DRIVE_PROJECT_NUMBER='581263132861';
+const DRIVE_CONFIG_KEY='budget-drive-app-config-v1';
+const DEFAULT_DRIVE_CLIENT_ID='581263132861-g4b2dijgbp4tannrm3nkl44668f4jds9.apps.googleusercontent.com';
 const DRIVE_SCOPE='https://www.googleapis.com/auth/drive.file openid email';
 const DRIVE_MIME='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+function loadDriveConfig(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(DRIVE_CONFIG_KEY)||'{}');
+    return {
+      clientId:typeof saved.clientId==='string'?saved.clientId:DEFAULT_DRIVE_CLIENT_ID,
+      pickerApiKey:typeof saved.pickerApiKey==='string'?saved.pickerApiKey:''
+    };
+  }catch(error){
+    console.error('Could not read Google Drive app configuration:',error);
+    return {clientId:DEFAULT_DRIVE_CLIENT_ID,pickerApiKey:''};
+  }
+}
+let driveConfig=loadDriveConfig();
 let drive={token:null,tokenExpiresAt:0,user:null,file:null,meta:null,busy:false,suppressAutosync:false,autoTimer:null,unboundState:null};
 function loadLocal(key=stateStorageKey){
   try{ const raw = localStorage.getItem(key); if(raw) return JSON.parse(raw); }catch(e){}
@@ -662,8 +750,22 @@ function stateHasData(state){
   return !!(state&&(state.order?.length||state.categories?.length||state.classifications?.length||
     state.regulars?.length||state.savings?.length||state.debts?.length||state.notes?.length));
 }
+function saveDriveConfig(clientId,pickerApiKey){
+  const config={clientId:clientId.trim(),pickerApiKey:pickerApiKey.trim()};
+  if(config.clientId&&!config.clientId.endsWith('.apps.googleusercontent.com')){
+    throw new Error(t('drive_invalid_client_id'));
+  }
+  if(config.pickerApiKey&&!config.pickerApiKey.startsWith('AIza')){
+    throw new Error(t('drive_invalid_api_key'));
+  }
+  try{localStorage.setItem(DRIVE_CONFIG_KEY,JSON.stringify(config));}
+  catch(error){throw new Error(`${t('drive_config_save_failed')}: ${error.message}`);}
+  driveConfig=config;
+}
 function activateDriveAccount(user){
   const accountKey=`${LS_KEY}:google:${user.sub}`;
+  const accountChanged=!!drive.user&&drive.user.sub!==user.sub;
+  if(accountChanged) drive.file=null;
   if(stateStorageKey!==accountKey){
     if(stateStorageKey===LS_KEY&&stateHasData(STATE)) drive.unboundState=JSON.parse(JSON.stringify(STATE));
     stateStorageKey=accountKey;
@@ -1191,7 +1293,7 @@ async function loadPickerLibrary(){
   });
 }
 async function chooseDriveFile(){
-  if(!DRIVE_PICKER_API_KEY) throw new Error(t('drive_picker_setup'));
+  if(!driveConfig.pickerApiKey) throw new Error(t('drive_picker_setup'));
   await loadPickerLibrary();
   return new Promise(resolve=>{
     const view=new google.picker.DocsView(google.picker.ViewId.DOCS)
@@ -1200,8 +1302,8 @@ async function chooseDriveFile(){
     const picker=new google.picker.PickerBuilder()
       .addView(view)
       .setOAuthToken(drive.token)
-      .setDeveloperKey(DRIVE_PICKER_API_KEY)
-      .setAppId(DRIVE_PROJECT_NUMBER)
+      .setDeveloperKey(driveConfig.pickerApiKey)
+      .setAppId(driveConfig.clientId.split('-')[0])
       .setTitle(t('drive_select_file'))
       .setCallback(data=>{
         if(data.action===google.picker.Action.PICKED) resolve(data.docs[0].id);
@@ -1215,7 +1317,7 @@ async function requestDriveAuthorization(){
   if(!window.google?.accounts?.oauth2) throw new Error(t('drive_client_missing'));
   return new Promise((resolve,reject)=>{
     const tokenClient=google.accounts.oauth2.initTokenClient({
-      client_id:DRIVE_CLIENT_ID,
+      client_id:driveConfig.clientId,
       scope:DRIVE_SCOPE,
       callback:async response=>{
         if(response.error){reject(new Error(response.error_description||response.error));return;}
@@ -1230,7 +1332,7 @@ async function requestDriveAuthorization(){
       },
       error_callback:error=>reject(new Error(error.message||'Google authorization was cancelled.'))
     });
-    tokenClient.requestAccessToken({prompt:''});
+    tokenClient.requestAccessToken({prompt:drive.user?'select_account':''});
   });
 }
 async function chooseAndLoadDriveFile(){
@@ -1334,14 +1436,20 @@ async function syncDriveForCurrentFile(interactive){
   saveDriveMeta(await getDriveFile(remote.id),await hashState(STATE));
 }
 async function connectGoogleDrive(){
-  if(!DRIVE_CLIENT_ID) throw new Error(t('drive_oauth_setup'));
-  if(!DRIVE_PICKER_API_KEY) throw new Error(t('drive_picker_setup'));
+  if(!driveConfig.clientId) throw new Error(t('drive_oauth_setup'));
+  if(!driveConfig.pickerApiKey) throw new Error(t('drive_picker_setup'));
   if(!navigator.onLine) throw new Error(t('drive_offline'));
   setDriveStatus(t('drive_connecting'));
   await requestDriveAuthorization();
   await syncDrive(true);
 }
 function handleDriveSyncClick(){
+  if(!driveConfig.clientId||!driveConfig.pickerApiKey){
+    setPage('config');
+    $('driveClientId')?.focus();
+    showToast(!driveConfig.clientId?t('drive_oauth_setup'):t('drive_picker_setup'));
+    return;
+  }
   connectGoogleDrive().catch(error=>{
     setDriveStatus(t('drive_error'));
     showToast(`${t('drive_error')}: ${error.message}`);
@@ -2078,7 +2186,12 @@ function openItemModal(itemId, natureDefault, copyId){
     saveLocal(); closeModal(); renderDespesas(); renderDashboard();
   });
 }
-function closeModal(){ $('overlay').classList.remove('show'); }
+function closeModal(){
+  $('overlay').classList.remove('show');
+  $('modalContent').style.maxWidth='';
+  $('modalContent').style.maxHeight='';
+  $('modalContent').style.overflowY='';
+}
 
 function openRenameMonthModal(){
   const m = activeMonth();
@@ -2187,11 +2300,47 @@ function openExpensePicker(){
 }
 
 /* ============================================================ configurações ============================================================ */
+function openDriveHowToModal(){
+  const steps=Array.from({length:8},(_,index)=>{
+    const number=index+1;
+    return `<section class="dw-drive-howto-step"><h3>${t(`drive_howto_step${number}_title`)}</h3><p>${t(`drive_howto_step${number}`)}</p></section>`;
+  }).join('');
+  $('modalContent').innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px">
+      <b style="font-size:16px">${t('drive_howto_title')}</b>
+      <button id="driveHowToClose" class="dw-modal-close" aria-label="${t('close')}">✕</button>
+    </div>
+    <p class="muted" style="font-size:12px;line-height:1.5">${t('drive_howto_intro')}</p>
+    ${steps}
+    <p style="margin:12px 0;font-size:12px"><a href="https://console.cloud.google.com/" target="_blank" rel="noopener noreferrer">${t('drive_howto_links')} ↗</a></p>
+    <button id="driveHowToBack" class="dw-btn primary">${t('drive_back_settings')}</button>`;
+  $('modalContent').style.maxWidth='620px';
+  $('modalContent').style.maxHeight='calc(100vh - 32px)';
+  $('modalContent').style.overflowY='auto';
+  $('overlay').classList.add('show');
+  $('driveHowToClose').addEventListener('click',closeModal);
+  $('driveHowToBack').addEventListener('click',closeModal);
+}
 function renderConfig(){
   const container = $('page-config');
   container.innerHTML = `
     <div class="dw-inlinerow" style="justify-content:space-between;flex-wrap:wrap"><h1 class="dw-h1">${t('config_title')}</h1><button class="dw-btn primary" id="createYear">${t('create_new_year')}</button></div>
     <p class="dw-sub">${t('config_sub')}</p>
+
+    <details class="dw-panel" open><summary class="dw-ph" style="cursor:pointer"><b>${t('panel_drive_settings')}</b><span class="muted" style="font-size:11.5px">${t('drive_settings_hint')}</span></summary>
+      <div class="dw-pbody">
+        <p id="driveSettingsStatus" class="muted" style="margin:0 0 12px;font-size:12px"></p>
+        <label class="dw-field"><span>${t('drive_client_id_label')}</span><input id="driveClientId" class="dw-cell boxed dw-drive-credential" type="text" autocomplete="off" spellcheck="false" value="${escapeHtml(driveConfig.clientId)}"></label>
+        <label class="dw-field"><span>${t('drive_picker_key_label')}</span><input id="drivePickerApiKey" class="dw-cell boxed dw-drive-credential" type="text" autocomplete="off" spellcheck="false" value="${escapeHtml(driveConfig.pickerApiKey)}"></label>
+        <p class="muted" style="font-size:11.5px;line-height:1.5">${t('drive_credentials_note')}</p>
+        <p style="font-size:11.5px;line-height:1.5;color:#fbbf24">${t('drive_secret_warning')}</p>
+        <div class="dw-inlinerow" style="flex-wrap:wrap">
+          <button class="dw-btn small" id="saveDriveCredentials">${t('drive_save_credentials')}</button>
+          <button class="dw-btn primary" id="linkGoogleDrive">${t('drive_link_button')}</button>
+          <button class="dw-btn small" id="driveHowTo">${t('drive_how_to')}</button>
+        </div>
+      </div>
+    </details>
 
     <details class="dw-panel"><summary class="dw-ph" style="cursor:pointer"><b>${t('panel_categories')}</b></summary>
       <div class="dw-pbody">
@@ -2260,6 +2409,25 @@ function renderConfig(){
   `;
   renderConfigLists();
   $('createYear').addEventListener('click',openCreateYearModal);
+  const driveStatus=$('driveSettingsStatus');
+  driveStatus.textContent=drive.user
+    ? `${t('drive_account_connected')}: ${drive.user.email||drive.user.name||''}${drive.file?` — ${drive.file.name}`:''}`
+    : driveConfig.clientId&&driveConfig.pickerApiKey?t('drive_config_saved'):t('drive_no_credentials');
+  $('saveDriveCredentials').addEventListener('click',()=>{
+    try{
+      saveDriveConfig($('driveClientId').value,$('drivePickerApiKey').value);
+      driveStatus.textContent=drive.user
+        ? `${t('drive_account_connected')}: ${drive.user.email||drive.user.name||''}${drive.file?` — ${drive.file.name}`:''}`
+        : driveConfig.clientId&&driveConfig.pickerApiKey?t('drive_config_saved'):t('drive_no_credentials');
+      showToast(t('drive_config_saved'));
+    }catch(error){showToast(error.message);}
+  });
+  $('linkGoogleDrive').addEventListener('click',()=>{
+    try{saveDriveConfig($('driveClientId').value,$('drivePickerApiKey').value);}
+    catch(error){showToast(error.message);return;}
+    handleDriveSyncClick();
+  });
+  $('driveHowTo').addEventListener('click',openDriveHowToModal);
   const updateRegularTypeFields=()=>{
     const isEntity=['Poupança','Dívida'].includes($('newRegularType').value);
     $('newRegularNameWrap').style.display=isEntity?'none':'';
