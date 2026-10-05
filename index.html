@@ -349,6 +349,7 @@ const I18N = {
     drive_native_sheet:'Este item é uma folha nativa do Google Sheets, não um ficheiro Excel. A sincronização automática exige um .xlsx no Drive. Podes descarregar a folha como Excel e voltar a carregá-la no Drive.',
     drive_picker_setup:'Falta ativar a Google Picker API e criar uma API key restrita ao endereço publicado da app.',
     drive_oauth_setup:'O Client ID Google não está configurado.',
+    drive_https_required:'A ligação ao Google Drive só funciona na app publicada por HTTPS. Abre https://miguelsagomes.github.io/BudgetApp/; não uses o ficheiro index.html do computador para ligar ao Drive.',
     drive_client_missing:'A biblioteca de autenticação Google não carregou. Verifica a ligação e tenta novamente.',
     drive_select_file:'Escolhe o ficheiro Excel do orçamento no Google Drive.',
     drive_no_permission:'O Drive não autorizou o acesso a este ficheiro.',
@@ -511,6 +512,7 @@ const I18N = {
     drive_native_sheet:'This item is a native Google Sheets file, not an Excel workbook. Automatic sync requires an .xlsx file in Drive. Download the sheet as Excel and upload that file to Drive.',
     drive_picker_setup:'Enable the Google Picker API and create an API key restricted to the published app origin.',
     drive_oauth_setup:'The Google Client ID is not configured.',
+    drive_https_required:'Google Drive linking only works in the published HTTPS app. Open https://miguelsagomes.github.io/BudgetApp/; do not use the local index.html file to link Drive.',
     drive_client_missing:'The Google authentication library did not load. Check your connection and try again.',
     drive_select_file:'Choose the budget Excel file in Google Drive.',
     drive_no_permission:'Google Drive did not authorize access to this file.',
@@ -1436,6 +1438,7 @@ async function syncDriveForCurrentFile(interactive){
   saveDriveMeta(await getDriveFile(remote.id),await hashState(STATE));
 }
 async function connectGoogleDrive(){
+  if(location.protocol!=='https:') throw new Error(t('drive_https_required'));
   if(!driveConfig.clientId) throw new Error(t('drive_oauth_setup'));
   if(!driveConfig.pickerApiKey) throw new Error(t('drive_picker_setup'));
   if(!navigator.onLine) throw new Error(t('drive_offline'));
@@ -1444,6 +1447,10 @@ async function connectGoogleDrive(){
   await syncDrive(true);
 }
 function handleDriveSyncClick(){
+  if(location.protocol!=='https:'){
+    showToast(t('drive_https_required'));
+    return;
+  }
   if(!driveConfig.clientId||!driveConfig.pickerApiKey){
     setPage('config');
     $('driveClientId')?.focus();
