@@ -201,7 +201,7 @@ body.light .dw-icobtn{background:#f1f5f9;border-color:#cbd5e1;color:#475569}
   <button class="dw-topicon" id="btnConnect" title="Link an Excel file">⇪</button>
   <button class="dw-topicon" id="btnSave" title="Save to Excel">💾</button>
   <button class="dw-topicon" id="btnDriveSync" title="Sync with Google Drive" aria-label="Sync with Google Drive">☁</button>
-  <button class="dw-topicon" id="btnDriveSave" title="Save to Excel in Google Drive" aria-label="Save to Excel in Google Drive">☁💾</button>
+  <button class="dw-topicon" id="btnDriveSave" title="Upload to Drive" aria-label="Upload to Drive">☁💾</button>
   <span class="dw-drive-status" id="driveSyncStatus" aria-live="polite"></span>
   <button class="dw-topicon" id="btnLang" title="Mudar para português" style="font-size:12px;font-weight:800">EN</button>
   <button class="dw-topicon" id="btnTheme" title="Toggle theme">☀</button>
@@ -357,7 +357,7 @@ const I18N = {
     drive_no_permission:'A Google não autorizou o acesso a esta Google Sheet.',
     panel_drive_settings:'Google Drive',
     drive_settings_hint:'O Excel local e o Excel no Google Drive são ligações separadas.',
-    drive_link_button:'Ligar ao Google Drive',
+    drive_link_button:'Obter do Drive',
     drive_client_id_label:'OAuth Client ID',
     drive_sheet_url_label:'Link do ficheiro Excel no Google Drive',
     drive_sheet_url_placeholder:'https://docs.google.com/spreadsheets/d/…',
@@ -378,12 +378,12 @@ const I18N = {
     drive_local_open:'Abrir Excel local',
     drive_local_save:'Guardar Excel local',
     drive_google_section:'Excel no Google Drive (online)',
-    drive_google_section_hint:'Indica o link do Excel no Drive, autoriza a conta e guarda diretamente nesse ficheiro.',
+    drive_google_section_hint:'Obter dados do ficheiro ligado ou enviar as alterações para o Drive.',
     drive_sheet_link_invalid:'Cola o link completo do ficheiro no Google Drive (docs.google.com/spreadsheets/d/…).',
     drive_sheet_api_setup:'No Google Cloud, ativa a Google Drive API para este projeto.',
     drive_sheet_loaded:'Dados carregados do Excel no Google Drive',
     drive_sheet_saved:'Alterações guardadas diretamente no Excel do Google Drive',
-    drive_save_sheet:'Guardar no Excel do Google Drive',
+    drive_save_sheet:'Enviar para o Drive',
     drive_sheet_empty:'O ficheiro Excel no Google Drive está vazio.',
     drive_sheet_initial_message:'Escolhe se queres carregar os dados deste Excel ou substituir o seu conteúdo pelos dados atuais da app.',
     drive_load_sheet:'Carregar dados do Excel no Drive',
@@ -537,7 +537,7 @@ const I18N = {
     drive_client_missing:'The Google authentication library did not load. Check your connection and try again.',
     panel_drive_settings:'Google Drive',
     drive_settings_hint:'Local Excel and Excel in Google Drive are separate storage connections.',
-    drive_link_button:'Link to Google Drive',
+    drive_link_button:'Get from Drive',
     drive_client_id_label:'OAuth Client ID',
     drive_sheet_url_label:'Google Drive Excel file link',
     drive_sheet_url_placeholder:'https://docs.google.com/spreadsheets/d/…',
@@ -558,12 +558,12 @@ const I18N = {
     drive_local_open:'Open local Excel',
     drive_local_save:'Save local Excel',
     drive_google_section:'Excel in Google Drive (online)',
-    drive_google_section_hint:'Enter the Drive Excel link, authorize the account, and save directly to that file.',
+    drive_google_section_hint:'Get data from the linked file or upload your changes to Drive.',
     drive_sheet_link_invalid:'Paste the full Google Drive file link (docs.google.com/spreadsheets/d/…).',
     drive_sheet_api_setup:'Enable the Google Drive API in this Google Cloud project.',
     drive_sheet_loaded:'Data loaded from Excel in Google Drive',
     drive_sheet_saved:'Changes saved directly to Excel in Google Drive',
-    drive_save_sheet:'Save to Excel in Google Drive',
+    drive_save_sheet:'Upload to Drive',
     drive_sheet_empty:'The Excel file in Google Drive is empty.',
     drive_sheet_initial_message:'Choose whether to load data from this Excel file or replace its contents with the current app data.',
     drive_load_sheet:'Load data from Excel in Drive',
