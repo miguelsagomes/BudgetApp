@@ -1,4 +1,4 @@
-const CACHE_NAME='budget-app-v2';
+const CACHE_NAME='budget-app-v3';
 const APP_SHELL=['./','./index.html','./manifest.webmanifest','./budget-icon.svg'];
 const CACHEABLE_HOSTS=new Set([
   'cdnjs.cloudflare.com',
@@ -26,6 +26,17 @@ self.addEventListener('fetch',event=>{
 
   event.respondWith((async()=>{
     const cache=await caches.open(CACHE_NAME);
+    if(request.mode==='navigate'||url.pathname.endsWith('/index.html')){
+      try{
+        const response=await fetch(request);
+        if(response.ok) await cache.put(request,response.clone());
+        return response;
+      }catch(error){
+        const cached=await cache.match(request);
+        if(cached) return cached;
+        throw error;
+      }
+    }
     const cached=await cache.match(request);
     if(cached) return cached;
     const response=await fetch(request);
