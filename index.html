@@ -93,7 +93,7 @@ body.light .dw-btn:hover{background:#eef2f7}
 
 .dw-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 18px}
 .dw-stats.five{grid-template-columns:repeat(5,minmax(0,1fr))}
-@media(max-width:640px){.dw-stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.dw-stats,.dw-stats.five{grid-template-columns:repeat(2,minmax(0,1fr))}.dw-kpi .val{font-size:17px;overflow-wrap:anywhere}}
 .dw-kpi{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:10px 11px;min-height:70px}
 .dw-kpi .lbl{display:block;text-transform:uppercase;font-size:9.5px;font-weight:900;color:#8fb5e8;letter-spacing:.3px}
 body.light .dw-kpi .lbl{color:#0f766e}
