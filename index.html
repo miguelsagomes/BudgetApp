@@ -343,9 +343,15 @@ const I18N = {
     drive_offline:'Offline — alterações guardadas neste dispositivo',
     drive_error:'Erro de sincronização com Google Drive', drive_connect:'Ligar Google Drive',
     drive_initial_title:'Preparar orçamento no Google Drive',
-    drive_initial_message:'Escolhe se queres manter os dados já existentes neste dispositivo ou substituí-los pelos dados deste ficheiro Excel no Drive.',
-    drive_keep_local:'Manter este dispositivo e atualizar o Drive',
-    drive_use_remote:'Carregar a versão do Drive (descarta alterações locais)',
+    drive_initial_message:'Escolhe se queres enviar os dados locais para o ficheiro Excel do Drive ou carregar a versão que já está no Drive.',
+    drive_keep_local:'Enviar alterações locais para o Drive',
+    drive_use_remote:'Obter versão do Drive (descartar alterações locais)',
+    drive_upload_confirm_title:'Enviar alterações para o Drive?',
+    drive_upload_confirm_message:'A app guarda automaticamente os dados neste dispositivo. Queres gravar agora esses dados no ficheiro Excel do Drive?',
+    drive_upload_confirm_button:'Enviar para o Drive',
+    drive_get_confirm_title:'Há alterações locais por enviar',
+    drive_get_confirm_message:'Queres enviar primeiro as alterações locais para o Drive, obter a versão do Drive descartando as alterações locais, ou cancelar?',
+    drive_cancel_upload:'Cancelar',
     drive_cancel:'Cancelar',
     drive_native_sheet:'Este link aponta para uma Google Sheet nativa. Para este fluxo, indica um ficheiro Excel no Drive.',
     drive_excel_file_required:'O ficheiro ligado não é um Excel .xlsx/.xls compatível.',
@@ -378,7 +384,7 @@ const I18N = {
     drive_local_open:'Abrir Excel local',
     drive_local_save:'Guardar Excel local',
     drive_google_section:'Excel no Google Drive (online)',
-    drive_google_section_hint:'Obter dados do ficheiro ligado ou enviar as alterações para o Drive.',
+    drive_google_section_hint:'Obter dados do ficheiro ligado ou enviar as alterações locais para o Drive.',
     drive_sheet_link_invalid:'Cola o link completo do ficheiro no Google Drive (docs.google.com/spreadsheets/d/…).',
     drive_sheet_api_setup:'No Google Cloud, ativa a Google Drive API para este projeto.',
     drive_sheet_loaded:'Dados carregados do Excel no Google Drive',
@@ -406,7 +412,7 @@ const I18N = {
     drive_howto_step7_title:'7. Configura a ligação na app',
     drive_howto_step7:'O Client ID já vem preenchido. Cola o link completo do ficheiro Excel nas Settings e guarda. Não é necessário Picker API key nem App ID.',
     drive_howto_step8_title:'8. Liga, carrega e grava na folha',
-    drive_howto_step8:'Carrega em Ligar ao Google Drive, autoriza a conta e escolhe se carregas os dados do Excel ou os dados locais. Usa Guardar no Excel do Google Drive para escrever diretamente no ficheiro.',
+    drive_howto_step8:'Carrega em Obter do Drive para carregar os dados. Usa Enviar para o Drive e confirma para guardar primeiro os dados neste dispositivo e depois atualizar o ficheiro; não há envios automáticos.',
     drive_howto_links:'Abrir Google Cloud Console',
     close:'Fechar',
     show_investment_values:'Mostrar valores de mercado', market_value:'Valor de mercado', market_value_hint:'Valor do investimento neste mês (opcional).', market_as_of:'Registado em {m}',
@@ -525,9 +531,15 @@ const I18N = {
     drive_offline:'Offline — changes saved on this device',
     drive_error:'Google Drive sync error', drive_connect:'Connect Google Drive',
     drive_initial_title:'Set up a budget in Google Drive',
-    drive_initial_message:'Choose whether to keep the data already on this device or replace it with the data from this Excel file in Drive.',
-    drive_keep_local:'Keep this device and update Drive',
-    drive_use_remote:'Load the Drive version (discard local changes)',
+    drive_initial_message:'Choose whether to upload the local data to the Excel file in Drive or load the version already there.',
+    drive_keep_local:'Upload local changes to Drive',
+    drive_use_remote:'Get Drive version (discard local changes)',
+    drive_upload_confirm_title:'Upload changes to Drive?',
+    drive_upload_confirm_message:'The app saves data automatically on this device. Do you want to write that data to the Excel file in Drive now?',
+    drive_upload_confirm_button:'Upload to Drive',
+    drive_get_confirm_title:'Local changes are waiting to upload',
+    drive_get_confirm_message:'Upload local changes to Drive first, get the Drive version and discard local changes, or cancel?',
+    drive_cancel_upload:'Cancel',
     drive_cancel:'Cancel',
     drive_native_sheet:'This link points to a native Google Sheet. For this flow, provide an Excel file in Drive.',
     drive_excel_file_required:'The linked file is not a compatible .xlsx/.xls Excel workbook.',
@@ -558,7 +570,7 @@ const I18N = {
     drive_local_open:'Open local Excel',
     drive_local_save:'Save local Excel',
     drive_google_section:'Excel in Google Drive (online)',
-    drive_google_section_hint:'Get data from the linked file or upload your changes to Drive.',
+    drive_google_section_hint:'Get data from the linked file or upload local changes to Drive.',
     drive_sheet_link_invalid:'Paste the full Google Drive file link (docs.google.com/spreadsheets/d/…).',
     drive_sheet_api_setup:'Enable the Google Drive API in this Google Cloud project.',
     drive_sheet_loaded:'Data loaded from Excel in Google Drive',
@@ -586,7 +598,7 @@ const I18N = {
     drive_howto_step7_title:'7. Configure the app connection',
     drive_howto_step7:'The Client ID is prefilled. Paste the full Excel file link in Settings and save. No Picker API key or App ID is required.',
     drive_howto_step8_title:'8. Link, load, and save to the sheet',
-    drive_howto_step8:'Click Link to Google Drive, authorize the account, then choose whether to load Excel data or local data. Use Save to Excel in Google Drive to write directly to the file.',
+    drive_howto_step8:'Click Get from Drive to load data. Use Upload to Drive and confirm to save data on this device first, then update the file; uploads are not automatic.',
     drive_howto_links:'Open Google Cloud Console',
     close:'Close',
     show_investment_values:'Show market values', market_value:'Market value', market_value_hint:'Investment value for this month (optional).', market_as_of:'Recorded for {m}',
@@ -762,9 +774,10 @@ function saveLocal(){
     if(stateStorageKey===LS_KEY) localStorage.setItem('orcamento-dirty','1');
   }catch(error){
     showToast(`${t('toast_save_failed')} ${error.message}`);
-    return;
+    return false;
   }
   queueDriveAutosync();
+  return true;
 }
 function isDirty(key=stateStorageKey){
   try{return localStorage.getItem(`orcamento-dirty:${key}`)==='1'||(key===LS_KEY&&localStorage.getItem('orcamento-dirty')==='1');}
@@ -1531,11 +1544,8 @@ function setDriveStatus(text){
 }
 function queueDriveAutosync(){
   if(drive.suppressAutosync||ui.storageMode!=='sheets'||!drive.sheetId||!drive.token) return;
-  clearTimeout(drive.autoTimer);
   if(!navigator.onLine){setDriveStatus(t('drive_offline'));return;}
-  if(Date.now()>=drive.tokenExpiresAt){setDriveStatus(t('drive_pending'));return;}
   setDriveStatus(t('drive_pending'));
-  drive.autoTimer=setTimeout(()=>runGoogleSheetSync(false),1200);
 }
 async function runGoogleSheetSync(interactive){
   try{await syncDriveTarget(interactive);}
@@ -1626,7 +1636,7 @@ async function writeDriveWorkbook(file){
   );
   return response.json();
 }
-async function syncDriveWorkbook(interactive,file){
+async function syncDriveWorkbook(interactive,file,intent='get'){
   if(!drive.user) throw new Error(t('drive_not_connected'));
   if(!navigator.onLine){setDriveStatus(t('drive_offline'));return;}
   if(drive.busy) return;
@@ -1641,16 +1651,32 @@ async function syncDriveWorkbook(interactive,file){
     const localHash=await hashState(localState);
     const localChanged=previous?localHash!==previous.localHash:stateHasData(localState);
     const remoteChanged=previous?String(remoteFile.version)!==String(previous.version):stateHasData(snapshot.state);
+    if(intent==='upload'){
+      const choice=await openDriveChoiceModal(t('drive_upload_confirm_title'),t('drive_upload_confirm_message'),[
+        {id:'upload',label:t('drive_upload_confirm_button'),primary:true},
+        {id:'cancel',label:t('drive_cancel_upload')}
+      ]);
+      if(choice!=='upload'){setDriveStatus(t('drive_pending'));return;}
+      if(unbound) STATE=normalizeState(JSON.parse(JSON.stringify(unbound)));
+      drive.suppressAutosync=true;
+      let savedLocally;
+      try{savedLocally=saveLocal();}
+      finally{drive.suppressAutosync=false;}
+      if(!savedLocally)return;
+    }
     const keepLocal=async()=>{
       if(unbound) STATE=normalizeState(JSON.parse(JSON.stringify(unbound)));
       drive.suppressAutosync=true;
-      try{saveLocal();}
+      let savedLocally;
+      try{savedLocally=saveLocal();}
       finally{drive.suppressAutosync=false;}
+      if(!savedLocally)return false;
       const updated=await writeDriveWorkbook(remoteFile);
       markClean();
       saveDriveWorkbookMeta(updated,await hashState(STATE));
       drive.unboundState=null;
       showToast(t('drive_sheet_saved'));
+      return true;
     };
     if(previous&&localChanged&&remoteChanged){
       if(!interactive){setDriveStatus(t('drive_pending'));return;}
@@ -1666,19 +1692,51 @@ async function syncDriveWorkbook(interactive,file){
       }else setDriveStatus(t('drive_pending'));
       return;
     }
-    if(previous&&remoteChanged&&!localChanged){
+    if(previous&&remoteChanged&&!localChanged&&intent!=='upload'){
       applyDriveWorkbookState(snapshot.state);
       saveDriveWorkbookMeta(remoteFile,await hashState(STATE));
       showToast(t('drive_sheet_loaded'));
       return;
     }
+    if(previous&&remoteChanged&&!localChanged&&intent==='upload'){
+      const choice=await openDriveChoiceModal(t('drive_conflict_title'),t('drive_conflict_message'),[
+        {id:'local',label:t('drive_keep_local'),primary:true},
+        {id:'remote',label:t('drive_use_remote')},
+        {id:'cancel',label:t('drive_cancel')}
+      ]);
+      if(choice==='local') await keepLocal();
+      else if(choice==='remote'){
+        applyDriveWorkbookState(snapshot.state);
+        saveDriveWorkbookMeta(remoteFile,await hashState(STATE));
+      }else setDriveStatus(t('drive_pending'));
+      return;
+    }
     if(previous&&localChanged){
+      if(intent==='get'){
+        if(!interactive){setDriveStatus(t('drive_pending'));return;}
+        const choice=await openDriveChoiceModal(t('drive_get_confirm_title'),t('drive_get_confirm_message'),[
+          {id:'local',label:t('drive_keep_local'),primary:true},
+          {id:'remote',label:t('drive_use_remote')},
+          {id:'cancel',label:t('drive_cancel_upload')}
+        ]);
+        if(choice==='local') await keepLocal();
+        else if(choice==='remote'){
+          applyDriveWorkbookState(snapshot.state);
+          saveDriveWorkbookMeta(remoteFile,await hashState(STATE));
+          showToast(t('drive_sheet_loaded'));
+        }else setDriveStatus(t('drive_pending'));
+        return;
+      }
       await keepLocal();
       return;
     }
     if(!previous){
       const localHasData=stateHasData(localState);
       const remoteHasData=stateHasData(snapshot.state);
+      if(intent==='upload'&&localHasData){
+        await keepLocal();
+        return;
+      }
       if(localHasData&&remoteHasData){
         const choice=await openDriveChoiceModal(t('drive_initial_title'),t('drive_initial_message'),[
           {id:'local',label:t('drive_keep_local'),primary:true},
@@ -1712,10 +1770,28 @@ async function syncDriveWorkbook(interactive,file){
         await keepLocal();
         return;
       }
-      if(remoteHasData){
+      if(remoteHasData&&intent!=='upload'){
         applyDriveWorkbookState(snapshot.state);
         saveDriveWorkbookMeta(remoteFile,await hashState(STATE));
         showToast(t('drive_sheet_loaded'));
+        return;
+      }
+      if(remoteHasData&&intent==='upload'){
+        const choice=await openDriveChoiceModal(t('drive_initial_title'),t('drive_initial_message'),[
+          {id:'local',label:t('drive_keep_local'),primary:true},
+          {id:'remote',label:t('drive_use_remote')},
+          {id:'cancel',label:t('drive_cancel')}
+        ]);
+        if(choice==='local') await keepLocal();
+        else if(choice==='remote'){
+          applyDriveWorkbookState(snapshot.state);
+          saveDriveWorkbookMeta(remoteFile,await hashState(STATE));
+          showToast(t('drive_sheet_loaded'));
+        }else setDriveStatus(t('drive_pending'));
+        return;
+      }
+      if(intent!=='upload'){
+        saveDriveWorkbookMeta(remoteFile,localHash);
         return;
       }
       const updated=await writeDriveWorkbook(remoteFile);
@@ -1723,16 +1799,20 @@ async function syncDriveWorkbook(interactive,file){
       showToast(t('drive_sheet_saved'));
       return;
     }
+    if(intent==='upload'){
+      await keepLocal();
+      return;
+    }
     saveDriveWorkbookMeta(remoteFile,localHash);
   }finally{drive.busy=false;}
 }
-async function syncDriveTarget(interactive,requestedFileId=null){
+async function syncDriveTarget(interactive,requestedFileId=null,intent='get'){
   const fileId=requestedFileId||drive.sheetId||extractSpreadsheetId(driveConfig.sheetUrl);
   const file=await getDriveFile(fileId);
   drive.file=file;
   drive.sheetId=file.id;
   if(file.mimeType===GOOGLE_SHEET_MIME) throw new Error(t('drive_native_sheet'));
-  return syncDriveWorkbook(interactive,file);
+  return syncDriveWorkbook(interactive,file,intent);
 }
 async function getGoogleSheetSnapshot(spreadsheetId){
   const metadataResponse=await googleApiRequest(`${SHEETS_API}/${encodeURIComponent(spreadsheetId)}?fields=spreadsheetId,properties(title),sheets(properties(sheetId,title,index))`);
@@ -1993,7 +2073,7 @@ function handleGoogleSheetSave(){
     if(!drive.user||!drive.token||Date.now()>=drive.tokenExpiresAt) await requestDriveAuthorization();
     if(!driveConfig.sheetUrl) throw new Error(t('drive_file_not_selected'));
     ui.storageMode='sheets';
-    await syncDriveTarget(true,extractSpreadsheetId(driveConfig.sheetUrl));
+    await syncDriveTarget(true,extractSpreadsheetId(driveConfig.sheetUrl),'upload');
   })().catch(error=>{
     setDriveStatus(t('drive_sheet_error'));
     showToast(`${t('drive_sheet_error')}: ${error.message}`);
@@ -2001,7 +2081,7 @@ function handleGoogleSheetSave(){
 }
 window.addEventListener('offline',()=>setDriveStatus(drive.sheetId?t('drive_offline'):t('drive_not_connected')));
 window.addEventListener('online',()=>{
-  if(drive.sheetId&&drive.token&&Date.now()<drive.tokenExpiresAt) runGoogleSheetSync(false);
+  if(drive.sheetId&&ui.storageMode==='sheets') setDriveStatus(t('drive_pending'));
 });
 
 function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
