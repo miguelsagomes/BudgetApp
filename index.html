@@ -416,6 +416,12 @@ const I18N = {
     drive_local_section_hint:'Abre um Excel deste computador e guarda-o de volta (menu 💻).',
     drive_local_open:'Abrir Excel local',
     drive_local_save:'Guardar Excel local',
+    base_local_create:'Criar Excel base',
+    base_download:'Descarregar Excel base',
+    base_drive_create:'Criar Excel base no Drive',
+    base_created_local:'Excel base criado: ',
+    base_created_drive:'Excel base criado no Drive e link guardado. Carrega em Obter do Drive.',
+    base_downloaded:'Excel base descarregado.',
     drive_google_section:'Excel no Google Drive (online)',
     drive_google_section_hint:'Obter dados do ficheiro ligado ou enviar as alterações locais para o Drive.',
     drive_sheet_link_invalid:'Cola o link completo do ficheiro no Google Drive (docs.google.com/spreadsheets/d/…).',
@@ -431,21 +437,21 @@ const I18N = {
     drive_howto_title:'How to link Google Drive',
     drive_howto_intro:'Guia rápido para usar o teu Excel do Google Drive nesta app, no computador e no telemóvel.',
     drive_howto_step1_title:'1. Abre a app',
-    drive_howto_step1:'Usa sempre https://miguelsagomes.github.io/BudgetApp/ (a ligação ao Drive não funciona a partir de um ficheiro aberto no computador). No Android, instala a app pelo menu do Chrome: ⋮ → Instalar app.',
+    drive_howto_step1:'Abre a app no endereço publicado (https://miguelsagomes.github.io/BudgetApp/ ou o link que te enviaram). A ligação ao Drive não funciona a partir de um ficheiro aberto no computador. A app corre no teu navegador e os dados ficam só no teu Excel/Drive; não ficas ligado ao GitHub de ninguém. No Android, instala a app pelo menu do Chrome: ⋮ → Instalar app.',
     drive_howto_step2_title:'2. Coloca o Excel no Drive',
-    drive_howto_step2:'Carrega o teu ficheiro .xlsx para o Google Drive. Não o converter para Google Sheets: a app grava diretamente no ficheiro Excel.',
+    drive_howto_step2:'Em Settings → Excel no Google Drive, carrega em Criar Excel base no Drive: a app cria o ficheiro no teu Drive e guarda o link. Em alternativa, carrega em Descarregar Excel base e envia o .xlsx manualmente para o Drive. Se já tens um Excel, basta carregá-lo. Não o converter para Google Sheets.',
     drive_howto_step3_title:'3. Copia o link do ficheiro',
     drive_howto_step3:'No Drive, clica no ficheiro com o botão direito → Partilhar → Copiar link. Também serve o endereço da página quando abres o ficheiro.',
     drive_howto_step4_title:'4. Cola o link nas Settings',
-    drive_howto_step4:'Em Settings → Excel no Google Drive, cola o link no campo respetivo e carrega em Guardar link. O OAuth Client ID já vem preenchido. Esta configuração fica guardada em cada dispositivo.',
+    drive_howto_step4:'Em Settings → Excel no Google Drive, cola o link no campo respetivo e carrega em Guardar link. O OAuth Client ID já vem preenchido (ver passo 8). Se criaste o Excel base no Drive, o link já está preenchido. Esta configuração fica guardada em cada dispositivo.',
     drive_howto_step5_title:'5. Obter do Drive',
     drive_howto_step5:'Carrega em Obter do Drive e autoriza a tua conta Google quando for pedido. Os dados do Excel são carregados para a app.',
     drive_howto_step6_title:'6. Regista e envia para o Drive',
     drive_howto_step6:'A app guarda automaticamente neste dispositivo. Para atualizar o Excel no Drive, carrega em Enviar para o Drive e confirma. Não há envios automáticos.',
     drive_howto_step7_title:'7. Usar noutro dispositivo',
     drive_howto_step7:'Repete os passos 4 e 5 no outro dispositivo. Ao abrir a app, carrega em Obter do Drive para teres a versão mais recente; se houver alterações locais por enviar, a app pergunta o que fazer.',
-    drive_howto_step8_title:'8. Se a autorização falhar',
-    drive_howto_step8:'Se a Google pedir novamente autorização, repete Obter do Drive. Para usares o teu próprio projeto Google Cloud: ativa a Google Drive API, cria um OAuth Client ID (Aplicação Web) com a origem https://miguelsagomes.github.io, adiciona o âmbito https://www.googleapis.com/auth/drive e cola o Client ID nas Settings. Em modo Testing, adiciona a tua conta como utilizador de teste (a autorização expira em 7 dias).',
+    drive_howto_step8_title:'8. Client ID e autorização',
+    drive_howto_step8:'O OAuth Client ID identifica esta app perante a Google e serve para pedir a tua autorização de acesso ao Drive; não é uma palavra-passe. O que já vem preenchido pertence ao dono da app e está em modo Testing: só funciona para contas adicionadas por ele como utilizadores de teste. Se a Google bloquear o acesso, pede para te adicionarem ou usa o teu próprio. Se a Google pedir novamente autorização, repete Obter do Drive. Obtém-se na Google Cloud Console (APIs e serviços → Credenciais). Para usares o teu próprio projeto Google Cloud: ativa a Google Drive API, cria um OAuth Client ID (Aplicação Web) com a origem https://miguelsagomes.github.io, adiciona o âmbito https://www.googleapis.com/auth/drive e cola o Client ID nas Settings. Em modo Testing, adiciona a tua conta como utilizador de teste (a autorização expira em 7 dias).',
     drive_howto_links:'Abrir Google Cloud Console',
     close:'Fechar',
     show_investment_values:'Mostrar valores de mercado', market_value:'Valor de mercado', market_value_hint:'Valor do investimento neste mês (opcional).', market_as_of:'Registado em {m}',
@@ -600,6 +606,12 @@ const I18N = {
     drive_local_section_hint:'Open an Excel file from this computer and save it back (💻 menu).',
     drive_local_open:'Open local Excel',
     drive_local_save:'Save local Excel',
+    base_local_create:'Create base Excel',
+    base_download:'Download base Excel',
+    base_drive_create:'Create base Excel in Drive',
+    base_created_local:'Base Excel created: ',
+    base_created_drive:'Base Excel created in Drive and link saved. Click Get from Drive.',
+    base_downloaded:'Base Excel downloaded.',
     drive_google_section:'Excel in Google Drive (online)',
     drive_google_section_hint:'Get data from the linked file or upload local changes to Drive.',
     drive_sheet_link_invalid:'Paste the full Google Drive file link (docs.google.com/spreadsheets/d/…).',
@@ -615,21 +627,21 @@ const I18N = {
     drive_howto_title:'How to link Google Drive',
     drive_howto_intro:'Quick guide to using your Google Drive Excel file with this app, on computer and phone.',
     drive_howto_step1_title:'1. Open the app',
-    drive_howto_step1:'Always use https://miguelsagomes.github.io/BudgetApp/ (the Drive connection does not work from a file opened on your computer). On Android, install the app from the Chrome menu: ⋮ → Install app.',
+    drive_howto_step1:'Open the app at the published address (https://miguelsagomes.github.io/BudgetApp/ or the link you were sent). The Drive connection does not work from a file opened on your computer. The app runs in your browser and your data stays only in your Excel/Drive; you are not connected to anyone else’s GitHub. On Android, install the app from the Chrome menu: ⋮ → Install app.',
     drive_howto_step2_title:'2. Put the Excel file in Drive',
-    drive_howto_step2:'Upload your .xlsx file to Google Drive. Do not convert it to Google Sheets: the app saves directly to the Excel file.',
+    drive_howto_step2:'In Settings → Excel in Google Drive, click Create base Excel in Drive: the app creates the file in your Drive and saves the link. Alternatively, click Download base Excel and upload the .xlsx to Drive manually. If you already have an Excel file, just upload it. Do not convert it to Google Sheets.',
     drive_howto_step3_title:'3. Copy the file link',
     drive_howto_step3:'In Drive, right-click the file → Share → Copy link. The address of the page shown when you open the file also works.',
     drive_howto_step4_title:'4. Paste the link in Settings',
-    drive_howto_step4:'In Settings → Excel in Google Drive, paste the link in its field and click Save link. The OAuth Client ID is already filled in. This setting is stored on each device.',
+    drive_howto_step4:'In Settings → Excel in Google Drive, paste the link in its field and click Save link. The OAuth Client ID is already filled in (see step 8). If you created the base Excel in Drive, the link is already filled in. This setting is stored on each device.',
     drive_howto_step5_title:'5. Get from Drive',
     drive_howto_step5:'Click Get from Drive and authorize your Google account when asked. The Excel data is loaded into the app.',
     drive_howto_step6_title:'6. Record and upload to Drive',
     drive_howto_step6:'The app saves automatically on this device. To update the Excel file in Drive, click Upload to Drive and confirm. Nothing is uploaded automatically.',
     drive_howto_step7_title:'7. Use another device',
     drive_howto_step7:'Repeat steps 4 and 5 on the other device. When you open the app, click Get from Drive to see the latest version; if there are local changes not uploaded yet, the app asks what to do.',
-    drive_howto_step8_title:'8. If authorization fails',
-    drive_howto_step8:'If Google asks for authorization again, repeat Get from Drive. To use your own Google Cloud project: enable the Google Drive API, create an OAuth Client ID (Web application) with the origin https://miguelsagomes.github.io, add the scope https://www.googleapis.com/auth/drive and paste the Client ID in Settings. In Testing mode, add your account as a test user (authorization expires after 7 days).',
+    drive_howto_step8_title:'8. Client ID and authorization',
+    drive_howto_step8:'The OAuth Client ID identifies this app to Google and is used to ask for your permission to access Drive; it is not a password. The pre-filled one belongs to the app owner and is in Testing mode: it only works for accounts the owner added as test users. If Google blocks access, ask to be added or use your own. If Google asks for authorization again, repeat Get from Drive. You get one in the Google Cloud Console (APIs & Services → Credentials). To use your own Google Cloud project: enable the Google Drive API, create an OAuth Client ID (Web application) with the origin https://miguelsagomes.github.io, add the scope https://www.googleapis.com/auth/drive and paste the Client ID in Settings. In Testing mode, add your account as a test user (authorization expires after 7 days).',
     drive_howto_links:'Open Google Cloud Console',
     close:'Close',
     show_investment_values:'Show market values', market_value:'Market value', market_value_hint:'Investment value for this month (optional).', market_as_of:'Recorded for {m}',
@@ -2992,6 +3004,7 @@ function renderConfig(){
         <div class="dw-inlinerow" style="flex-wrap:wrap">
           <button class="dw-btn small" id="localOpenWorkbook">${t('drive_local_open')}</button>
           <button class="dw-btn small" id="localSaveWorkbook">${t('drive_local_save')}</button>
+          <button class="dw-btn small" id="localCreateBase">${t('base_local_create')}</button>
         </div>
       </div>
     </details>
@@ -3006,6 +3019,8 @@ function renderConfig(){
           <button class="dw-btn small" id="saveDriveCredentials">${t('drive_save_credentials')}</button>
           <button class="dw-btn primary" id="linkGoogleDrive">${t('drive_link_button')}</button>
           <button class="dw-btn small" id="saveGoogleSheet">${t('drive_save_sheet')}</button>
+          <button class="dw-btn small" id="driveCreateBase">${t('base_drive_create')}</button>
+          <button class="dw-btn small" id="downloadBase">${t('base_download')}</button>
           <button class="dw-btn small" id="driveHowTo">${t('drive_how_to')}</button>
         </div>
       </div>
@@ -3100,6 +3115,9 @@ function renderConfig(){
   $('localOpenWorkbook').addEventListener('click',()=>$('btnConnect').click());
   $('localSaveWorkbook').addEventListener('click',()=>$('btnSave').click());
   $('driveHowTo').addEventListener('click',openDriveHowToModal);
+  $('localCreateBase').addEventListener('click',createLocalBase);
+  $('downloadBase').addEventListener('click',downloadBase);
+  $('driveCreateBase').addEventListener('click',createDriveBase);
   const updateRegularTypeFields=()=>{
     const isEntity=['Poupança','Dívida'].includes($('newRegularType').value);
     $('newRegularNameWrap').style.display=isEntity?'none':'';
@@ -3887,9 +3905,14 @@ function openReportModal(){
   });
 }
 
-function buildNewYearWorkbook(year,monthIndex){
+function buildNewYearWorkbook(year,monthIndex,blank=false){
   const original=STATE;
   const copy=JSON.parse(JSON.stringify(original));
+  if(blank){
+    copy.regulars.forEach(r=>{r.budget=0;});
+    copy.savings.forEach(s=>{s.opening=0;s.target=null;s.currentValue=null;});
+    copy.debts.forEach(d=>{d.initial=0;});
+  }
   STATE={
     ...emptyState(),
     categories:copy.categories,
@@ -3913,6 +3936,56 @@ function buildNewYearWorkbook(year,monthIndex){
   }
 }
 
+function buildBaseWorkbook(){
+  const now=new Date();
+  return buildNewYearWorkbook(now.getFullYear(),now.getMonth(),true);
+}
+function downloadBase(){
+  XLSX.writeFile(buildBaseWorkbook(),'Budget-Base.xlsx');
+  showToast(t('base_downloaded'));
+}
+async function createLocalBase(){
+  if(!('showSaveFilePicker' in window)){downloadBase();return;}
+  try{
+    const handle=await window.showSaveFilePicker({suggestedName:'Budget-Base.xlsx',types:[{description:'Excel',accept:{[XLSX_MIME]:['.xlsx']}}]});
+    const writable=await handle.createWritable();
+    await writable.write(XLSX.write(buildBaseWorkbook(),{type:'array',bookType:'xlsx'}));
+    await writable.close();
+    showToast(t('base_created_local')+handle.name);
+  }catch(error){
+    if(error.name!=='AbortError') showToast(`${t('toast_save_failed')}: ${error.message}`);
+  }
+}
+async function createDriveBase(){
+  try{
+    if(location.protocol!=='https:') throw new Error(t('drive_https_required'));
+    if(!driveConfig.clientId) throw new Error(t('drive_oauth_setup'));
+    if(!navigator.onLine) throw new Error(t('drive_offline'));
+    if(!drive.user||!drive.token||Date.now()>=drive.tokenExpiresAt) await requestDriveAuthorization();
+    const boundary='base'+uid();
+    const bytes=XLSX.write(buildBaseWorkbook(),{type:'array',bookType:'xlsx'});
+    const body=new Blob([
+      `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n`,
+      JSON.stringify({name:'Budget-Base.xlsx',mimeType:XLSX_MIME}),
+      `\r\n--${boundary}\r\nContent-Type: ${XLSX_MIME}\r\n\r\n`,
+      new Uint8Array(bytes),
+      `\r\n--${boundary}--`
+    ]);
+    const response=await driveApiRequest('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id',{
+      method:'POST',
+      headers:{'Content-Type':`multipart/related; boundary=${boundary}`},
+      body
+    });
+    const {id}=await response.json();
+    const sheetUrl=`https://docs.google.com/spreadsheets/d/${id}/edit`;
+    saveDriveConfig(driveConfig.clientId,sheetUrl);
+    const input=$('driveSheetUrl');
+    if(input) input.value=sheetUrl;
+    showToast(t('base_created_drive'));
+  }catch(error){
+    showToast(`${t('drive_sheet_error')}: ${error.message}`);
+  }
+}
 function openCreateYearModal(){
   const monthNames=ui.lang==='en'?MESES_EN:MESES_PT;
   const latestId=STATE.order[STATE.order.length-1];
