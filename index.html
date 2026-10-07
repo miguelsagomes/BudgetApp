@@ -252,7 +252,12 @@ body.light .dw-icobtn{background:#f1f5f9;border-color:#cbd5e1;color:#475569}
 const NATURES = ['Despesa','Rendimento','Poupança','Dívida'];
 const NATURE_BADGE = {Despesa:'amber',Rendimento:'teal',Poupança:'blue',Dívida:'red'};
 const uid = () => Math.random().toString(36).slice(2,10);
-const num = v => (typeof v === 'number' && !Number.isNaN(v)) ? v : (parseFloat(v) || 0);
+const num = v => {
+  if(typeof v === 'number') return Number.isNaN(v) ? 0 : v;
+  let s = String(v ?? '').trim().replace(/\s/g,'');
+  if(s.includes(',')) s = s.includes('.') && s.lastIndexOf(',') > s.lastIndexOf('.') ? s.replace(/\./g,'').replace(',','.') : s.replace(/,/g,s.includes('.')?'':'.');
+  return parseFloat(s) || 0;
+};
 const todayISO = () => {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -2633,6 +2638,11 @@ function renderDespesasRegistos(container, m){
   container.querySelectorAll('[data-match]').forEach(b=>b.addEventListener('click', ()=>matchActualToBudget(b.dataset.match, container)));
   $('bankBalanceNow').addEventListener('input', e=>{ activeMonth().bankBalanceNow = parseFloat(e.target.value)||0; saveLocal(); });
 
+  destroyCharts(['classDonut','classBars','classIncomeVs']);
+  if(classOpen && classCount>0){
+    drawClassificationCharts({donut:'classChartDonut', legend:'classDonutLegend', bars:'classChartBars', donutKey:'classDonut', barsKey:'classBars'}, ruleEntries, t1);
+    drawIncomeVsChart('classChartIncomeVs', 'classIncomeVs', ruleEntries, t1);
+  }
 }
 
 function drawClassificationCharts(ids, ruleEntries, t1){
