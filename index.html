@@ -378,14 +378,14 @@ const I18N = {
     drive_offline:'Offline — alterações guardadas neste dispositivo',
     drive_error:'Erro de sincronização com Google Drive', drive_connect:'Ligar Google Drive',
     drive_initial_title:'Preparar orçamento no Google Drive',
-    drive_initial_message:'Escolhe se queres enviar os dados locais para o ficheiro Excel do Drive ou carregar a versão que já está no Drive.',
-    drive_keep_local:'Enviar alterações locais para o Drive',
-    drive_use_remote:'Obter versão do Drive (descartar alterações locais)',
-    drive_upload_confirm_title:'Enviar alterações para o Drive?',
-    drive_upload_confirm_message:'A app guarda automaticamente os dados neste dispositivo. Queres gravar agora esses dados no ficheiro Excel do Drive?',
-    drive_upload_confirm_button:'Enviar para o Drive',
-    drive_get_confirm_title:'Há alterações locais por enviar',
-    drive_get_confirm_message:'Queres enviar primeiro as alterações locais para o Drive, obter a versão do Drive descartando as alterações locais, ou cancelar?',
+    drive_initial_message:'Já tens dados neste dispositivo e o Excel do Drive também tem dados. Qual queres usar?',
+    drive_keep_local:'Guardar os meus dados no Drive',
+    drive_use_remote:'Obter do Drive (substitui os dados deste dispositivo)',
+    drive_upload_confirm_title:'Guardar no Drive?',
+    drive_upload_confirm_message:'Os dados deste dispositivo vão substituir o conteúdo do Excel no Drive.',
+    drive_upload_confirm_button:'Guardar no Drive',
+    drive_get_confirm_title:'Tens alterações que não estão no Drive',
+    drive_get_confirm_message:'Queres guardá-las no Drive primeiro, ou obter do Drive e perdê-las?',
     drive_cancel_upload:'Cancelar',
     drive_cancel:'Cancelar',
     drive_native_sheet:'Este link aponta para uma Google Sheet nativa. Para este fluxo, indica um ficheiro Excel no Drive.',
@@ -416,9 +416,13 @@ const I18N = {
     drive_local_section_hint:'Abre um Excel deste computador e guarda-o de volta (menu 💻).',
     drive_local_open:'Abrir Excel local',
     drive_local_save:'Guardar Excel local',
+    base_pick_title:'Escolhe a pasta do Drive',
+    base_folder_up:'Pasta anterior',
+    base_no_subfolders:'Sem subpastas.',
+    base_create_here:'Criar aqui',
     base_local_create:'Criar Excel base',
     base_download:'Descarregar Excel base',
-    base_drive_create:'Criar Excel base no Drive',
+    base_drive_create:'Criar Excel base numa pasta do Drive',
     base_created_local:'Excel base criado: ',
     base_created_drive:'Excel base criado no Drive e link guardado. Carrega em Obter do Drive.',
     base_downloaded:'Excel base descarregado.',
@@ -430,9 +434,9 @@ const I18N = {
     drive_sheet_saved:'Alterações guardadas diretamente no Excel do Google Drive',
     drive_save_sheet:'Enviar para o Drive',
     drive_sheet_empty:'O ficheiro Excel no Google Drive está vazio.',
-    drive_sheet_initial_message:'Escolhe se queres carregar os dados deste Excel ou substituir o seu conteúdo pelos dados atuais da app.',
-    drive_load_sheet:'Carregar dados do Excel no Drive',
-    drive_replace_sheet:'Substituir o Excel do Drive pelos dados da app',
+    drive_sheet_initial_message:'Queres obter os dados deste Excel ou guardar os dados da app nele?',
+    drive_load_sheet:'Obter do Drive',
+    drive_replace_sheet:'Guardar os dados da app no Drive',
     drive_sheet_error:'Erro na ligação ao ficheiro do Google Drive',
     drive_howto_title:'How to link Google Drive',
     drive_howto_intro:'Guia rápido para usar o teu Excel do Google Drive nesta app, no computador e no telemóvel.',
@@ -570,14 +574,14 @@ const I18N = {
     drive_offline:'Offline — changes saved on this device',
     drive_error:'Google Drive sync error', drive_connect:'Connect Google Drive',
     drive_initial_title:'Set up a budget in Google Drive',
-    drive_initial_message:'Choose whether to upload the local data to the Excel file in Drive or load the version already there.',
-    drive_keep_local:'Upload local changes to Drive',
-    drive_use_remote:'Get Drive version (discard local changes)',
-    drive_upload_confirm_title:'Upload changes to Drive?',
-    drive_upload_confirm_message:'The app saves data automatically on this device. Do you want to write that data to the Excel file in Drive now?',
-    drive_upload_confirm_button:'Upload to Drive',
-    drive_get_confirm_title:'Local changes are waiting to upload',
-    drive_get_confirm_message:'Upload local changes to Drive first, get the Drive version and discard local changes, or cancel?',
+    drive_initial_message:'You have data on this device and the Excel in Drive also has data. Which one do you want to use?',
+    drive_keep_local:'Save my data to Drive',
+    drive_use_remote:'Get from Drive (replaces data on this device)',
+    drive_upload_confirm_title:'Save to Drive?',
+    drive_upload_confirm_message:'The data on this device will replace the contents of the Excel in Drive.',
+    drive_upload_confirm_button:'Save to Drive',
+    drive_get_confirm_title:'You have changes that are not in Drive',
+    drive_get_confirm_message:'Save them to Drive first, or get from Drive and lose them?',
     drive_cancel_upload:'Cancel',
     drive_cancel:'Cancel',
     drive_native_sheet:'This link points to a native Google Sheet. For this flow, provide an Excel file in Drive.',
@@ -606,9 +610,13 @@ const I18N = {
     drive_local_section_hint:'Open an Excel file from this computer and save it back (💻 menu).',
     drive_local_open:'Open local Excel',
     drive_local_save:'Save local Excel',
+    base_pick_title:'Choose the Drive folder',
+    base_folder_up:'Back',
+    base_no_subfolders:'No subfolders.',
+    base_create_here:'Create here',
     base_local_create:'Create base Excel',
     base_download:'Download base Excel',
-    base_drive_create:'Create base Excel in Drive',
+    base_drive_create:'Create base Excel in a Drive folder',
     base_created_local:'Base Excel created: ',
     base_created_drive:'Base Excel created in Drive and link saved. Click Get from Drive.',
     base_downloaded:'Base Excel downloaded.',
@@ -620,9 +628,9 @@ const I18N = {
     drive_sheet_saved:'Changes saved directly to Excel in Google Drive',
     drive_save_sheet:'Upload to Drive',
     drive_sheet_empty:'The Excel file in Google Drive is empty.',
-    drive_sheet_initial_message:'Choose whether to load data from this Excel file or replace its contents with the current app data.',
-    drive_load_sheet:'Load data from Excel in Drive',
-    drive_replace_sheet:'Replace Drive Excel with app data',
+    drive_sheet_initial_message:'Do you want to get the data from this Excel or save the app data into it?',
+    drive_load_sheet:'Get from Drive',
+    drive_replace_sheet:'Save app data to Drive',
     drive_sheet_error:'Google Drive file connection error',
     drive_howto_title:'How to link Google Drive',
     drive_howto_intro:'Quick guide to using your Google Drive Excel file with this app, on computer and phone.',
@@ -3936,18 +3944,25 @@ function buildNewYearWorkbook(year,monthIndex,blank=false){
   }
 }
 
+const BASE_TEMPLATE={"Categorias":[["Nome"],["Casa"],["Saúde"],["Lazer"],["Learn"],["Vícios"],["Supermercado"],["Transportes"],["Investments"],["Bank"],["Extras"]],"Classificacoes":[["Nome","Meta%","ContaRegra"],["Needs",50,"Sim"],["Wants",25,"Sim"],["Savings",25,"Sim"],["Income",0,"Não"],["Dept",0,"Não"]],"Regulares":[["ID","Item","Tipo","Categoria","Classificacao","Orcamento","Conta"],["ugcpshxb","Casa","Dívida",null,"Dept",0,"Casa"],["ybe7wfyz","Renda","Despesa","Casa","Needs",0,null],["1bz1vsf1","Luz","Despesa","Casa","Needs",0,null],["nu1ac78f","Gás","Despesa","Casa","Needs",0,null],["hvh9khfl","Água","Despesa","Casa","Needs",0,null],["nzpjc21p","Internet","Despesa","Casa","Needs",0,null],["8zfmjje9","Telemóvel","Despesa","Casa","Needs",0,null],["7ptp8p12","Psicólogo(a)","Despesa","Saúde","Wants",0,null],["omotj3e8","Stremio","Despesa","Lazer","Wants",0,null],["etfymiy5","Gym","Despesa","Lazer","Wants",0,null],["rbb99jpr","Natação","Despesa","Lazer","Wants",0,null],["z8ld0p26","Netflix","Despesa","Lazer","Wants",0,null],["ncwr55vl","Chrunchyroll","Despesa","Lazer","Wants",0,null],["04jx24a7","Faculdade","Despesa","Learn","Needs",0,null],["faxpzb7f","Supermercado Needs","Despesa","Supermercado","Needs",0,null],["aa85nd8j","Food N' Stuff","Despesa","Supermercado","Wants",0,null],["uzuzti24","Bolt","Despesa","Transportes","Wants",0,null],["putowdhy","Via Verde","Despesa","Transportes","Wants",0,null],["i3625ynr","Farmácia","Despesa","Saúde","Needs",0,null],["cu3zpq3e","Condomínio","Despesa","Casa","Needs",0,null],["ohak3tmn","Base","Rendimento","Casa","Income",0,null],["ug5f4qsa","Cartão Refeição","Rendimento","Casa","Income",0,null],["kqw308gt","Emergency Fund","Poupança","Bank","Savings",0,"Emergency Fund"],["qt1hcllg","SP 500","Poupança","Investments","Savings",0,"SP 500"]],"Poupancas":[["Nome","Tipo","Saldo Inicial","Meta","Total Investido (calculado)","Valor Atual (mercado)","MostrarValorMercado","Categoria"],["SP 500","Investimento",0,null,0,null,"Não","Investments"],["Emergency Fund","Poupança",0,null,0,null,"Não","Bank"],["Mês Extra","Poupança",0,null,0,null,"Não","Bank"]],"Dividas":[["Nome","Valor Inicial","Pago (calculado)","Em Falta (calculado)"],["Casa",0,0,0],["Cartão Crédito",0,0,0]]};
 function buildBaseWorkbook(){
-  const now=new Date();
-  return buildNewYearWorkbook(now.getFullYear(),now.getMonth(),true);
+  const previous=STATE;
+  try{
+    const template=XLSX.utils.book_new();
+    Object.entries(BASE_TEMPLATE).forEach(([name,rows])=>XLSX.utils.book_append_sheet(template,XLSX.utils.aoa_to_sheet(rows),name));
+    loadWorkbook(template,{persist:false});
+    const now=new Date();
+    return buildNewYearWorkbook(now.getFullYear(),now.getMonth(),true);
+  }finally{STATE=previous;}
 }
 function downloadBase(){
-  XLSX.writeFile(buildBaseWorkbook(),'Budget-Base.xlsx');
+  XLSX.writeFile(buildBaseWorkbook(),'BudgetValues.xlsx');
   showToast(t('base_downloaded'));
 }
 async function createLocalBase(){
   if(!('showSaveFilePicker' in window)){downloadBase();return;}
   try{
-    const handle=await window.showSaveFilePicker({suggestedName:'Budget-Base.xlsx',types:[{description:'Excel',accept:{[XLSX_MIME]:['.xlsx']}}]});
+    const handle=await window.showSaveFilePicker({suggestedName:'BudgetValues.xlsx',types:[{description:'Excel',accept:{[XLSX_MIME]:['.xlsx']}}]});
     const writable=await handle.createWritable();
     await writable.write(XLSX.write(buildBaseWorkbook(),{type:'array',bookType:'xlsx'}));
     await writable.close();
@@ -3956,17 +3971,57 @@ async function createLocalBase(){
     if(error.name!=='AbortError') showToast(`${t('toast_save_failed')}: ${error.message}`);
   }
 }
+async function chooseDriveFolder(){
+  const trail=[{id:'root',name:'Drive'}];
+  return new Promise(resolve=>{
+    const finish=value=>{closeModal();resolve(value);};
+    const render=async()=>{
+      const current=trail[trail.length-1];
+      let folders=[];
+      let failure='';
+      try{
+        const query=encodeURIComponent(`'${current.id}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false`);
+        const response=await driveApiRequest(`https://www.googleapis.com/drive/v3/files?q=${query}&fields=files(id,name)&orderBy=name&pageSize=200`);
+        folders=(await response.json()).files||[];
+      }catch(error){failure=error.message;}
+      $('modalContent').innerHTML=`
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px"><b style="font-size:14px">${t('base_pick_title')}</b><button id="folderClose" class="dw-modal-close">✕</button></div>
+        <p class="muted" style="font-size:12px;margin:0 0 10px">${escapeHtml(trail.map(f=>f.name).join(' / '))}</p>
+        <div style="display:flex;flex-direction:column;gap:6px;max-height:40vh;overflow-y:auto">
+          ${trail.length>1?`<button class="dw-btn small" id="folderUp">↩ ${t('base_folder_up')}</button>`:''}
+          ${folders.map((f,i)=>`<button class="dw-btn small" data-folder="${i}" style="text-align:left">📁 ${escapeHtml(f.name)}</button>`).join('')}
+          ${!folders.length&&!failure?`<span class="muted" style="font-size:12px">${t('base_no_subfolders')}</span>`:''}
+          ${failure?`<span style="color:var(--red);font-size:12px">${escapeHtml(failure)}</span>`:''}
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
+          <button class="dw-btn" id="folderCancel">${t('btn_cancel')}</button>
+          <button class="dw-btn primary" id="folderChoose">${t('base_create_here')}</button>
+        </div>`;
+      $('folderClose').addEventListener('click',()=>finish(null));
+      $('folderCancel').addEventListener('click',()=>finish(null));
+      $('folderChoose').addEventListener('click',()=>finish(current.id));
+      $('folderUp')?.addEventListener('click',()=>{trail.pop();render();});
+      $('modalContent').querySelectorAll('[data-folder]').forEach(button=>button.addEventListener('click',()=>{
+        trail.push(folders[Number(button.dataset.folder)]);render();
+      }));
+    };
+    $('overlay').classList.add('show');
+    render();
+  });
+}
 async function createDriveBase(){
   try{
     if(location.protocol!=='https:') throw new Error(t('drive_https_required'));
     if(!driveConfig.clientId) throw new Error(t('drive_oauth_setup'));
     if(!navigator.onLine) throw new Error(t('drive_offline'));
     if(!drive.user||!drive.token||Date.now()>=drive.tokenExpiresAt) await requestDriveAuthorization();
+    const folderId=await chooseDriveFolder();
+    if(!folderId) return;
     const boundary='base'+uid();
     const bytes=XLSX.write(buildBaseWorkbook(),{type:'array',bookType:'xlsx'});
     const body=new Blob([
       `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n`,
-      JSON.stringify({name:'Budget-Base.xlsx',mimeType:XLSX_MIME}),
+      JSON.stringify({name:'BudgetValues.xlsx',mimeType:XLSX_MIME,parents:[folderId]}),
       `\r\n--${boundary}\r\nContent-Type: ${XLSX_MIME}\r\n\r\n`,
       new Uint8Array(bytes),
       `\r\n--${boundary}--`
@@ -4186,7 +4241,7 @@ async function saveToFile(){
       return;
     }catch(e){ showToast(t('toast_save_failed')); }
   }
-  XLSX.writeFile(wb, 'orcamento.xlsx');
+  XLSX.writeFile(wb, 'BudgetValues.xlsx');
   showToast(t('toast_downloaded'));
 }
 

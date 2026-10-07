@@ -1,4 +1,4 @@
-const CACHE_NAME='budget-app-v6';
+const CACHE_NAME='budget-app-v7';
 const APP_SHELL=['./','./index.html','./manifest.webmanifest','./budget-icon.svg'];
 const CACHEABLE_HOSTS=new Set([
   'cdnjs.cloudflare.com',
